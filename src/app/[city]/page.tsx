@@ -61,6 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function CityPage({ params }: Props) {
   const locationName = slugToLocationName(params.city);
   const pageUrl = `${siteUrl}/${params.city}`;
+  const nowIso = new Date().toISOString();
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -98,6 +99,33 @@ export default function CityPage({ params }: Props) {
         description: `Accurate Fajr, Dhuhr, Asr, Maghrib, and Isha prayer times in ${locationName}.`,
         breadcrumb: {
           '@id': `${pageUrl}/#breadcrumb`,
+        },
+      },
+      {
+        '@type': 'NewsArticle',
+        '@id': `${pageUrl}/#newsarticle`,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': pageUrl,
+        },
+        headline: `Today Prayer Times in ${locationName} - Fajr, Dhuhr, Asr, Maghrib & Isha`,
+        description: `Today's accurate Islamic prayer timings, live countdown, Qibla compass direction, and Hijri dates for ${locationName}.`,
+        image: [`${siteUrl}/og-image.png`],
+        datePublished: nowIso,
+        dateModified: nowIso,
+        author: {
+          '@type': 'Organization',
+          name: 'WaqtNama',
+          url: siteUrl,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'WaqtNama',
+          url: siteUrl,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${siteUrl}/favicon.ico`,
+          },
         },
       },
     ],
