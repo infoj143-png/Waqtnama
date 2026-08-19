@@ -30,6 +30,21 @@ export interface TranslationDictionary {
     current: string;
     next: string;
   };
+  qibla: {
+    title: string;
+    subtitle: string;
+    findBtn: string;
+    locating: string;
+    qiblaBearing: string;
+    distanceToKaaba: string;
+    heading: string;
+    facingQibla: string;
+    compassSensorUnavailable: string;
+    deviceCalibrationTip: string;
+    permissionDenied: string;
+    km: string;
+    degrees: string;
+  };
   footerText: string;
   dir: 'ltr' | 'rtl';
 }
@@ -65,6 +80,21 @@ export const translations: Record<Language, TranslationDictionary> = {
       current: 'Current',
       next: 'Next',
     },
+    qibla: {
+      title: 'Qibla Direction Compass',
+      subtitle: 'Find exact direction to Kaaba, Makkah from anywhere',
+      findBtn: 'Find Qibla',
+      locating: 'Locating & Calibrating...',
+      qiblaBearing: 'Qibla Angle',
+      distanceToKaaba: 'Distance to Makkah',
+      heading: 'Device Heading',
+      facingQibla: 'You are facing Qibla!',
+      compassSensorUnavailable: 'Magnetic sensor orientation not active on this device/browser. Rotate device or refer to angle from North.',
+      deviceCalibrationTip: 'Rotate your phone in a figure-8 motion for better compass accuracy.',
+      permissionDenied: 'Location permission denied. Please allow location access to find Qibla direction.',
+      km: 'km',
+      degrees: 'deg',
+    },
     footerText: 'WaqtNama - Accurate prayer times for Muslims around the world.',
     dir: 'ltr',
   },
@@ -97,6 +127,21 @@ export const translations: Record<Language, TranslationDictionary> = {
     prayerStatus: {
       current: 'جاری',
       next: 'اگلی',
+    },
+    qibla: {
+      title: 'قبلہ رخ کمپاس',
+      subtitle: 'دنیا میں کہیں سے بھی مکہ مکرمہ میں خانہ کعبہ کی درست سمت معلوم کریں',
+      findBtn: 'قبلہ معلوم کریں',
+      locating: 'لوکیشن اور سینسر جاری ہے...',
+      qiblaBearing: 'قبلہ کا زاویہ',
+      distanceToKaaba: 'خانہ کعبہ سے فاصلہ',
+      heading: 'ڈیوائس کی سمت',
+      facingQibla: 'آپ کا رخ قبلہ کی طرف ہے!',
+      compassSensorUnavailable: 'اس ڈیوائس/براؤزر پر مقناطیسی سینسر فعال نہیں ہے۔ برائے مہربانی شمال سے دیے گئے زاویہ پر توجہ دیں۔',
+      deviceCalibrationTip: 'بہتر کمپاس کے لیے اپنے فون کو 8 کے ہندسے کی شکل میں گھمائیں۔',
+      permissionDenied: 'لوکیشن کی اجازت نہیں ملی۔ قبلہ کی سمت معلوم کرنے کے لیے لوکیشن کی اجازت دیں۔',
+      km: 'کلومیٹر',
+      degrees: 'درجے',
     },
     footerText: 'وقت نامہ - دنیا بھر کے مسلمانوں کے لیے بالکل درست اوقاتِ نماز۔',
     dir: 'rtl',
