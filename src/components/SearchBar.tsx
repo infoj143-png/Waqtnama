@@ -11,7 +11,14 @@ interface SearchBarProps {
   isLoading?: boolean;
 }
 
-const QUICK_CITIES = ['Lahore, Pakistan', 'London, UK', 'New York, USA', 'Mecca, Saudi Arabia', 'Dubai, UAE'];
+const QUICK_CITIES = [
+  'Karachi, Pakistan',
+  'Lahore, Pakistan',
+  'London, UK',
+  'New York, USA',
+  'Mecca, Saudi Arabia',
+  'Dubai, UAE',
+];
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   language,
@@ -45,7 +52,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       async (position) => {
         const { latitude, longitude } = position.coords;
         try {
-          // Attempt reverse geocoding via BigDataCloud API
           const res = await fetch(
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
           );
@@ -92,7 +98,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full pl-11 rtl:pl-3 rtl:pr-11 pr-4 py-3 bg-emerald-50/40 border border-emerald-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm transition-all"
+            aria-label={t.searchPlaceholder}
+            className="w-full min-h-[44px] pl-11 rtl:pl-3 rtl:pr-11 pr-4 py-3 bg-emerald-50/40 border border-emerald-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm sm:text-base transition-all"
           />
         </div>
 
@@ -100,7 +107,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           <button
             type="submit"
             disabled={isLoading}
-            className="flex-1 md:flex-none px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-60 active:scale-95"
+            aria-label={t.searchBtn}
+            className="flex-1 md:flex-none min-h-[44px] px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 text-sm sm:text-base disabled:opacity-60"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -114,7 +122,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             type="button"
             onClick={handleDetectLocation}
             disabled={isDetecting || isLoading}
-            className="flex-1 md:flex-none px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold rounded-xl border border-emerald-200 transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-60 active:scale-95 whitespace-nowrap"
+            aria-label={t.detectBtn}
+            className="flex-1 md:flex-none min-h-[44px] px-4 py-3 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-700 font-semibold rounded-xl border border-emerald-200 transition-all flex items-center justify-center gap-2 text-sm sm:text-base disabled:opacity-60 whitespace-nowrap"
           >
             {isDetecting ? (
               <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
@@ -127,14 +136,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       </form>
 
       {statusMsg && (
-        <div className="mt-3 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 p-2.5 rounded-lg flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+        <div className="mt-3 text-xs sm:text-sm font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 p-2.5 sm:p-3 rounded-lg flex items-center gap-2">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping flex-shrink-0" />
           {statusMsg}
         </div>
       )}
 
       {/* Quick city tags */}
-      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-gray-500">
+      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-500">
         <span className="font-medium text-gray-600">{t.dir === 'rtl' ? 'مقبول شہر:' : 'Popular:'}</span>
         {QUICK_CITIES.map((city) => (
           <button
@@ -145,7 +154,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               onSearch(city);
               setStatusMsg(null);
             }}
-            className="px-2.5 py-1 bg-emerald-50/80 hover:bg-emerald-100 text-emerald-800 rounded-md border border-emerald-100 transition-colors"
+            aria-label={`Select city ${city}`}
+            className="min-h-[36px] px-3 py-1.5 bg-emerald-50/80 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 font-medium rounded-md border border-emerald-100 transition-colors flex items-center justify-center"
           >
             {city}
           </button>

@@ -20,18 +20,19 @@ export const Header: React.FC<HeaderProps> = ({ language, onLanguageChange }) =>
             <Compass className="w-8 h-8 text-emerald-100 animate-pulse" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               {t.title}
             </h1>
-            <p className="text-xs text-emerald-100/90 font-medium">{t.subtitle}</p>
+            <p className="text-xs sm:text-sm text-emerald-100/90 font-medium">{t.subtitle}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-emerald-800/60 p-1.5 rounded-xl border border-emerald-600/40 backdrop-blur-sm">
-          <Globe className="w-4 h-4 text-emerald-200 ml-2 rtl:mr-2 rtl:ml-0" />
+        <div className="flex items-center gap-1.5 bg-emerald-800/60 p-1.5 rounded-xl border border-emerald-600/40 backdrop-blur-sm">
+          <Globe className="w-4 h-4 text-emerald-200 ml-2 rtl:mr-2 rtl:ml-0 flex-shrink-0" />
           <button
             onClick={() => onLanguageChange('en')}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            aria-label="Switch language to English"
+            className={`min-h-[44px] px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center ${
               language === 'en'
                 ? 'bg-white text-emerald-800 shadow-sm'
                 : 'text-emerald-100 hover:text-white hover:bg-emerald-700/50'
@@ -41,7 +42,8 @@ export const Header: React.FC<HeaderProps> = ({ language, onLanguageChange }) =>
           </button>
           <button
             onClick={() => onLanguageChange('ur')}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            aria-label="Switch language to Urdu"
+            className={`min-h-[44px] px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center ${
               language === 'ur'
                 ? 'bg-white text-emerald-800 shadow-sm'
                 : 'text-emerald-100 hover:text-white hover:bg-emerald-700/50'

@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'WaqtNama - Prayer Times Worldwide',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'WaqtNama - Accurate Prayer Times & Qibla Direction for All Cities Worldwide',
+    template: '%s - WaqtNama',
+  },
   description:
-    'Accurate Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha) for any city in the world. Detect location, view Gregorian and Hijri dates, and track next prayer countdown.',
+    'Accurate Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha), Qibla direction compass, live countdown, and Hijri calendar dates for all cities worldwide.',
   keywords: [
     'Prayer times',
     'Namaz timings',
@@ -16,9 +22,57 @@ export const metadata: Metadata = {
     'Maghrib',
     'Isha',
     'Hijri date',
-    'Qibla',
+    'Qibla direction',
+    'Qibla compass',
+    'Karachi prayer times',
+    'Lahore prayer times',
   ],
   authors: [{ name: 'WaqtNama Team' }],
+  creator: 'WaqtNama',
+  publisher: 'WaqtNama',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: 'WaqtNama - Accurate Prayer Times & Qibla Direction for All Cities Worldwide',
+    description:
+      'Accurate Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha), Qibla direction compass, live countdown, and Hijri calendar dates for all cities worldwide.',
+    url: siteUrl,
+    siteName: 'WaqtNama',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'WaqtNama - Accurate Prayer Times & Qibla Direction',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'WaqtNama - Accurate Prayer Times & Qibla Direction for All Cities Worldwide',
+    description:
+      'Accurate Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha), Qibla direction compass, live countdown, and Hijri calendar dates for all cities worldwide.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 export const viewport: Viewport = {
@@ -34,6 +88,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://api.aladhan.com" />
+        <link rel="dns-prefetch" href="https://api.aladhan.com" />
+      </head>
       <body className="bg-slate-50 text-gray-900 min-h-screen font-sans antialiased selection:bg-emerald-200 selection:text-emerald-900">
         {children}
       </body>
