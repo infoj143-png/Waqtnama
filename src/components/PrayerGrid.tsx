@@ -28,7 +28,7 @@ export const PrayerGrid: React.FC<PrayerGridProps> = ({ language, data }) => {
         {t.dir === 'rtl' ? 'آج کے اوقاتِ نماز' : 'Today\'s Prayer Schedule'}
       </h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
         {data.prayers.map((prayer) => {
           const isNext = prayer.key === data.nextPrayerKey;
           const isCurrent = prayer.key === data.currentPrayerKey;
@@ -37,9 +37,9 @@ export const PrayerGrid: React.FC<PrayerGridProps> = ({ language, data }) => {
           return (
             <div
               key={prayer.key}
-              className={`relative rounded-2xl p-5 border transition-all duration-200 flex flex-col justify-between ${
+              className={`relative rounded-2xl p-4 sm:p-5 border transition-all duration-200 flex flex-col justify-between ${
                 isNext
-                  ? 'bg-emerald-600 text-white border-emerald-700 shadow-lg shadow-emerald-600/20 ring-2 ring-emerald-500 scale-[1.02]'
+                  ? 'bg-emerald-600 text-white border-emerald-700 shadow-lg shadow-emerald-600/20 ring-2 ring-emerald-500 scale-[1.01] sm:scale-[1.02]'
                   : isCurrent
                   ? 'bg-emerald-50 text-emerald-950 border-emerald-300 shadow-md'
                   : 'bg-white text-gray-800 border-emerald-100 shadow-sm hover:border-emerald-200 hover:shadow-md'
@@ -72,7 +72,7 @@ export const PrayerGrid: React.FC<PrayerGridProps> = ({ language, data }) => {
               {/* Prayer Name */}
               <div>
                 <span
-                  className={`text-sm font-semibold tracking-wide block ${
+                  className={`text-xs sm:text-sm font-semibold tracking-wide block ${
                     isNext ? 'text-emerald-100' : 'text-gray-500'
                   }`}
                 >
