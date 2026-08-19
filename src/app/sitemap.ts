@@ -1,28 +1,10 @@
 import { MetadataRoute } from 'next';
+import { ALL_CITY_SLUGS } from '@/lib/citySlug';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
-  const cities = [
-    'karachi-pakistan',
-    'lahore-pakistan',
-    'islamabad-pakistan',
-    'rawalpindi-pakistan',
-    'peshawar-pakistan',
-    'multan-pakistan',
-    'quetta-pakistan',
-    'mecca-saudi-arabia',
-    'medina-saudi-arabia',
-    'riyadh-saudi-arabia',
-    'dubai-uae',
-    'london-uk',
-    'new-york-usa',
-    'toronto-canada',
-    'istanbul-turkey',
-    'sydney-australia',
-  ];
-
-  const cityEntries: MetadataRoute.Sitemap = cities.map((city) => ({
+  const cityEntries: MetadataRoute.Sitemap = ALL_CITY_SLUGS.map((city) => ({
     url: `${baseUrl}/${city}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
