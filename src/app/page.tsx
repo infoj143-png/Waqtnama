@@ -14,6 +14,7 @@ import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { CountdownCard } from '@/components/CountdownCard';
 import { PrayerGrid } from '@/components/PrayerGrid';
+import { QiblaCompass } from '@/components/QiblaCompass';
 import { Heart, Compass, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 
 export default function Home() {
@@ -158,6 +159,9 @@ export default function Home() {
 
               {/* 5 Daily Prayer Cards Grid */}
               <PrayerGrid language={language} data={prayerData} />
+
+              {/* Qibla Direction Compass Section */}
+              <QiblaCompass language={language} />
             </>
           ) : null}
 
