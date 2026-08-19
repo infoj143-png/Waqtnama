@@ -15,7 +15,8 @@ import { SearchBar } from '@/components/SearchBar';
 import { CountdownCard } from '@/components/CountdownCard';
 import { PrayerGrid } from '@/components/PrayerGrid';
 import { QiblaCompass } from '@/components/QiblaCompass';
-import { Heart, Compass, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
+import { Compass, ShieldCheck, AlertCircle, Loader2, Heart } from 'lucide-react';
+import { Footer } from '@/components/Footer';
 import { locationNameToSlug } from '@/lib/citySlug';
 
 interface PrayerTimesAppProps {
@@ -122,8 +123,6 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
     document.documentElement.dir = t.dir;
     document.documentElement.lang = language;
   }, [language]);
-
-  const t = translations[language];
 
   // Format current live time string (HH:MM:SS AM/PM)
   const currentTimeStr = now.toLocaleTimeString(language === 'ur' ? 'ur-PK' : 'en-US', {
@@ -260,17 +259,8 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-12 bg-white border-t border-emerald-100 py-6 text-center text-xs text-gray-500">
-        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="font-medium text-gray-600">{t.footerText}</p>
-          <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-            <span>Built with</span>
-            <Heart className="w-3.5 h-3.5 fill-emerald-600 text-emerald-600" />
-            <span>for Muslims Worldwide</span>
-          </div>
-        </div>
-      </footer>
+      {/* Shared Footer Component */}
+      <Footer />
     </div>
   );
 }

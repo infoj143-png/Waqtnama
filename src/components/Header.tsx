@@ -15,8 +15,8 @@ export const Header: React.FC<HeaderProps> = ({ language, onLanguageChange }) =>
   return (
     <header className="bg-emerald-700 text-white shadow-md border-b border-emerald-800">
       <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <div className="bg-white/10 p-2.5 rounded-full backdrop-blur-sm border border-white/20">
+        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse group">
+          <div className="bg-white/10 p-2.5 rounded-full backdrop-blur-sm border border-white/20 group-hover:bg-white/20 transition-all">
             <Compass className="w-8 h-8 text-emerald-100 animate-pulse" />
           </div>
           <div>
@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ language, onLanguageChange }) =>
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100/90 font-medium">{t.subtitle}</p>
           </div>
-        </div>
+        </a>
 
         <div className="flex items-center gap-1.5 bg-emerald-800/60 p-1.5 rounded-xl border border-emerald-600/40 backdrop-blur-sm">
           <Globe className="w-4 h-4 text-emerald-200 ml-2 rtl:mr-2 rtl:ml-0 flex-shrink-0" />
