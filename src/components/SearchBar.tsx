@@ -7,11 +7,18 @@ import { Search, MapPin, Loader2, Navigation } from 'lucide-react';
 interface SearchBarProps {
   language: Language;
   onSearch: (cityQuery: string) => void;
+  onDetectLocation: (lat: number, lng: number, locationName?: string) => void;
+  isLoading?: boolean;
 }
 
 const QUICK_CITIES = ['Lahore, Pakistan', 'London, UK', 'New York, USA', 'Mecca, Saudi Arabia', 'Dubai, UAE'];
 
-export const SearchBar: React.FC<SearchBarProps> = ({ language, onSearch }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+  language,
+  onSearch,
+  onDetectLocation,
+  isLoading = false,
+}) => {
   const t = translations[language];
   const [inputVal, setInputVal] = useState('');
   const [isDetecting, setIsDetecting] = useState(false);
@@ -35,11 +42,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({ language, onSearch }) => {
     setStatusMsg(t.detectingMsg);
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setIsDetecting(false);
+      async (position) => {
         const { latitude, longitude } = position.coords;
-        onSearch('Lahore, Pakistan'); // Auto set resolved location
-        setStatusMsg(`${t.locationNotFound} (${latitude.toFixed(2)}°, ${longitude.toFixed(2)}°)`);
+        try {
+          // Attempt reverse geocoding via BigDataCloud API
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+          );
+          if (res.ok) {
+            const geocodeData = await res.json();
+            const city = geocodeData.city || geocodeData.locality || geocodeData.principalSubdivision;
+            const country = geocodeData.countryName;
+            const locationName = city && country ? `${city}, ${country}` : city || country || undefined;
+
+            onDetectLocation(latitude, longitude, locationName);
+            setStatusMsg(t.locationNotFound);
+          } else {
+            onDetectLocation(latitude, longitude);
+            setStatusMsg(t.locationNotFound);
+          }
+        } catch {
+          onDetectLocation(latitude, longitude);
+          setStatusMsg(t.locationNotFound);
+        } finally {
+          setIsDetecting(false);
+        }
       },
       (error) => {
         setIsDetecting(false);
@@ -49,7 +76,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ language, onSearch }) => {
           setStatusMsg(t.locationError);
         }
       },
-      { timeout: 8000 }
+      { timeout: 10000 }
     );
   };
 
@@ -72,16 +99,21 @@ export const SearchBar: React.FC<SearchBarProps> = ({ language, onSearch }) => {
         <div className="flex flex-wrap sm:flex-nowrap gap-2">
           <button
             type="submit"
-            className="flex-1 md:flex-none px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 text-sm active:scale-95"
+            disabled={isLoading}
+            className="flex-1 md:flex-none px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-60 active:scale-95"
           >
-            <Search className="w-4 h-4" />
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Search className="w-4 h-4" />
+            )}
             <span>{t.searchBtn}</span>
           </button>
 
           <button
             type="button"
             onClick={handleDetectLocation}
-            disabled={isDetecting}
+            disabled={isDetecting || isLoading}
             className="flex-1 md:flex-none px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold rounded-xl border border-emerald-200 transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-60 active:scale-95 whitespace-nowrap"
           >
             {isDetecting ? (

@@ -7,6 +7,33 @@ export interface PrayerItem {
   dateObj: Date;
 }
 
+export interface AladhanApiResponseData {
+  timings?: Record<string, string>;
+  date?: {
+    readable?: string;
+    timestamp?: string;
+    hijri?: {
+      date?: string;
+      day?: string;
+      month?: {
+        number?: number;
+        en?: string;
+        ar?: string;
+      };
+      year?: string;
+    };
+  };
+  meta?: {
+    latitude?: number;
+    longitude?: number;
+    timezone?: string;
+    method?: {
+      id?: number;
+      name?: string;
+    };
+  };
+}
+
 export interface CityPrayerData {
   city: string;
   country: string;
@@ -20,64 +47,10 @@ export interface CityPrayerData {
     seconds: number;
     totalSeconds: number;
   };
-}
-
-const PRESET_CITIES: Record<string, { fajr: string; dhuhr: string; asr: string; maghrib: string; isha: string }> = {
-  'lahore, pakistan': { fajr: '05:05', dhuhr: '12:15', asr: '15:45', maghrib: '18:10', isha: '19:30' },
-  'karachi, pakistan': { fajr: '05:25', dhuhr: '12:30', asr: '15:55', maghrib: '18:25', isha: '19:45' },
-  'islamabad, pakistan': { fajr: '05:00', dhuhr: '12:15', asr: '15:40', maghrib: '18:12', isha: '19:35' },
-  'london, uk': { fajr: '04:45', dhuhr: '12:05', asr: '15:10', maghrib: '18:20', isha: '19:50' },
-  'london, united kingdom': { fajr: '04:45', dhuhr: '12:05', asr: '15:10', maghrib: '18:20', isha: '19:50' },
-  'new york, usa': { fajr: '05:10', dhuhr: '12:00', asr: '15:20', maghrib: '18:15', isha: '19:35' },
-  'new york, united states': { fajr: '05:10', dhuhr: '12:00', asr: '15:20', maghrib: '18:15', isha: '19:35' },
-  'makkah, saudi arabia': { fajr: '05:00', dhuhr: '12:20', asr: '15:40', maghrib: '18:25', isha: '19:55' },
-  'mecca, saudi arabia': { fajr: '05:00', dhuhr: '12:20', asr: '15:40', maghrib: '18:25', isha: '19:55' },
-  'dubai, uae': { fajr: '05:08', dhuhr: '12:22', asr: '15:45', maghrib: '18:18', isha: '19:38' },
-  'dubai, united arab emirates': { fajr: '05:08', dhuhr: '12:22', asr: '15:45', maghrib: '18:18', isha: '19:38' },
-  'istanbul, turkey': { fajr: '05:15', dhuhr: '12:25', asr: '15:35', maghrib: '18:15', isha: '19:40' },
-  'tokyo, japan': { fajr: '03:50', dhuhr: '11:45', asr: '15:25', maghrib: '17:50', isha: '19:15' },
-};
-
-function format12Hour(time24: string): string {
-  const [hoursStr, minutesStr] = time24.split(':');
-  let hours = parseInt(hoursStr, 10);
-  const period = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12;
-  const paddedHours = hours < 10 ? `0${hours}` : `${hours}`;
-  return `${paddedHours}:${minutesStr} ${period}`;
-}
-
-function stringHash(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
-
-// Generates plausible times for any given city string
-function generateTimesForQuery(query: string) {
-  const normalized = query.trim().toLowerCase();
-  if (PRESET_CITIES[normalized]) {
-    return PRESET_CITIES[normalized];
-  }
-
-  const hash = stringHash(normalized);
-  const fajrMin = (hash % 40) + 10; // 04:10 - 04:50
-  const dhuhrMin = ((hash >> 2) % 30) + 5; // 12:05 - 12:35
-  const asrMin = ((hash >> 4) % 30) + 20; // 15:20 - 15:50
-  const maghribMin = ((hash >> 6) % 30) + 5; // 18:05 - 18:35
-  const ishaMin = ((hash >> 8) % 30) + 15; // 19:15 - 19:45
-
-  const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
-
-  return {
-    fajr: `04:${pad(fajrMin)}`,
-    dhuhr: `12:${pad(dhuhrMin)}`,
-    asr: `15:${pad(asrMin)}`,
-    maghrib: `18:${pad(maghribMin)}`,
-    isha: `19:${pad(ishaMin)}`,
+  hijriDateApi?: {
+    day: string;
+    month: { en: string; ar: string };
+    year: string;
   };
 }
 
@@ -89,17 +62,47 @@ export function parseLocationQuery(query: string): { city: string; country: stri
     return { city, country };
   }
   const city = query.trim().replace(/\b\w/g, (l) => l.toUpperCase()) || 'Lahore';
-  return { city, country: 'Worldwide' };
+  return { city, country: 'Pakistan' };
 }
 
-export function calculatePrayerTimes(cityQuery: string, now: Date = new Date()): CityPrayerData {
-  const { city, country } = parseLocationQuery(cityQuery);
-  const timesMap = generateTimesForQuery(cityQuery);
+function format12Hour(time24: string): string {
+  // Strip timezone suffix if present (e.g., "05:15 (PKT)" -> "05:15")
+  const cleanTime = time24.split(' ')[0];
+  const [hoursStr, minutesStr] = cleanTime.split(':');
+  let hours = parseInt(hoursStr, 10);
+  const period = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const paddedHours = hours < 10 ? `0${hours}` : `${hours}`;
+  return `${paddedHours}:${minutesStr} ${period}`;
+}
+
+function cleanTime24(timeStr: string): string {
+  return timeStr.split(' ')[0];
+}
+
+export function processAladhanApiResponse(
+  apiData: AladhanApiResponseData,
+  cityQuery: string,
+  now: Date = new Date()
+): CityPrayerData {
+  const parsedLoc = parseLocationQuery(cityQuery);
+  const timings = apiData.timings || {};
+
+  const city = parsedLoc.city;
+  const country = parsedLoc.country;
 
   const keys: PrayerKey[] = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+  const apiKeys: Record<PrayerKey, string> = {
+    fajr: 'Fajr',
+    dhuhr: 'Dhuhr',
+    asr: 'Asr',
+    maghrib: 'Maghrib',
+    isha: 'Isha',
+  };
 
   const prayers: PrayerItem[] = keys.map((key) => {
-    const time24 = timesMap[key];
+    const rawTime = timings[apiKeys[key]] || '00:00';
+    const time24 = cleanTime24(rawTime);
     const [h, m] = time24.split(':').map(Number);
     const dateObj = new Date(now);
     dateObj.setHours(h, m, 0, 0);
@@ -143,10 +146,22 @@ export function calculatePrayerTimes(cityQuery: string, now: Date = new Date()):
   const minutes = Math.floor((totalSecondsRemaining % 3600) / 60);
   const seconds = totalSecondsRemaining % 60;
 
+  const hijriInfo = apiData.date?.hijri;
+  const hijriDateApi = hijriInfo && hijriInfo.day && hijriInfo.year
+    ? {
+        day: hijriInfo.day,
+        month: {
+          en: hijriInfo.month?.en || '',
+          ar: hijriInfo.month?.ar || '',
+        },
+        year: hijriInfo.year,
+      }
+    : undefined;
+
   return {
     city,
     country,
-    formattedLocation: country !== 'Worldwide' ? `${city}, ${country}` : city,
+    formattedLocation: country ? `${city}, ${country}` : city,
     prayers,
     nextPrayerKey,
     currentPrayerKey,
@@ -156,5 +171,6 @@ export function calculatePrayerTimes(cityQuery: string, now: Date = new Date()):
       seconds,
       totalSeconds: totalSecondsRemaining,
     },
+    hijriDateApi,
   };
 }
