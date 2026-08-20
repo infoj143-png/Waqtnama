@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from '@/components/Footer';
-import { Compass, Mail, Clock, ArrowLeft, Send, CheckCircle2, MessageSquare, AlertCircle } from 'lucide-react';
+import { Compass, Mail, Clock, ArrowLeft, Send, CheckCircle2, MessageSquare, AlertCircle, User, MessageCircle } from 'lucide-react';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
@@ -84,77 +84,148 @@ export default function ContactUsPage() {
             </h1>
 
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed mb-8">
-              If you have any questions or find any incorrect prayer time, please contact us at{' '}
+              Have a question, feedback, or noticed a discrepancy in prayer times? Send us a message directly using the form below or email us at{' '}
               <a
                 href="mailto:infoj.j143@gmail.com"
                 className="text-emerald-700 font-bold underline hover:text-emerald-800 transition-colors"
               >
                 infoj.j143@gmail.com
               </a>
-              . We will reply within 24 hours.
+              . We respond within 24 hours.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              {/* Direct Mail Card */}
-              <div className="bg-gradient-to-br from-emerald-800 to-emerald-900 text-white p-6 sm:p-8 rounded-2xl shadow-md flex flex-col justify-between">
-                <div>
-                  <div className="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 border border-white/20">
-                    <Mail className="w-6 h-6 text-emerald-200" />
-                  </div>
-                  <h2 className="text-xl font-bold mb-2">Email Inquiry</h2>
-                  <p className="text-emerald-100 text-xs sm:text-sm leading-relaxed mb-6">
-                    Feel free to reach out regarding prayer time adjustments, feature suggestions, or general feedback.
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
+              {/* Form Section */}
+              <div className="md:col-span-7 bg-slate-50 border border-emerald-100 p-6 sm:p-8 rounded-2xl">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <MessageCircle className="w-5 h-5 text-emerald-600" />
+                  Send Us a Message
+                </h2>
 
-                <div className="space-y-3 border-t border-emerald-700/60 pt-4">
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-emerald-300 flex-shrink-0" />
-                    <div>
-                      <span className="text-xs text-emerald-200 block">Guaranteed Response Time</span>
-                      <span className="text-sm font-semibold text-white">Within 24 Hours</span>
+                <form
+                  action="https://formsubmit.co/infoj.j143@gmail.com"
+                  method="POST"
+                  className="space-y-5"
+                >
+                  {/* FormSubmit Configuration */}
+                  <input type="hidden" name="_subject" value="New Contact Form Submission - WaqtNama" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_template" value="table" />
+
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                      Your Name
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        placeholder="e.g. Muhammad Ali"
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all"
+                      />
                     </div>
                   </div>
 
-                  <a
-                    href="mailto:infoj.j143@gmail.com"
-                    className="mt-2 w-full inline-flex items-center justify-center gap-2 bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-sm py-3 px-4 rounded-xl transition-all shadow"
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="yourname@example.com"
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      required
+                      placeholder="Type your message, feedback, or prayer time correction details here..."
+                      className="w-full p-3.5 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all resize-y"
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.99]"
                   >
                     <Send className="w-4 h-4" />
-                    Send Email
-                  </a>
-                </div>
+                    Send Message
+                  </button>
+                </form>
               </div>
 
-              {/* Support Guidelines Card */}
-              <div className="bg-slate-50 border border-emerald-100 p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
-                <div>
-                  <div className="bg-emerald-100 text-emerald-700 w-12 h-12 rounded-2xl flex items-center justify-center mb-6">
-                    <MessageSquare className="w-6 h-6" />
+              {/* Info & Guidelines Card */}
+              <div className="md:col-span-5 flex flex-col justify-between space-y-6">
+                <div className="bg-gradient-to-br from-emerald-800 to-emerald-900 text-white p-6 rounded-2xl shadow-md">
+                  <div className="bg-white/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-white/20">
+                    <Mail className="w-6 h-6 text-emerald-200" />
                   </div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-2">How We Can Help</h2>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">
-                    When submitting a prayer time error or discrepancy, please include:
+                  <h2 className="text-xl font-bold mb-2">Direct Email</h2>
+                  <p className="text-emerald-100 text-xs sm:text-sm leading-relaxed mb-4">
+                    Prefer emailing directly from your mail client? Feel free to write to us at any time.
                   </p>
-                  <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span>The exact City and Country name.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span>The specific prayer (e.g. Fajr, Maghrib) and date.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span>Your preferred calculation method if applicable.</span>
-                    </li>
-                  </ul>
+                  <a
+                    href="mailto:infoj.j143@gmail.com"
+                    className="text-emerald-200 hover:text-white font-semibold underline text-sm break-all"
+                  >
+                    infoj.j143@gmail.com
+                  </a>
+
+                  <div className="mt-6 pt-4 border-t border-emerald-700/60 flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-emerald-300 flex-shrink-0" />
+                    <div>
+                      <span className="text-xs text-emerald-200 block">Response Time</span>
+                      <span className="text-sm font-semibold text-white">Within 24 Hours</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-emerald-100 flex items-center gap-2 text-xs text-gray-500">
-                  <AlertCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>We appreciate your feedback in improving WaqtNama.</span>
+                <div className="bg-slate-50 border border-emerald-100 p-6 rounded-2xl">
+                  <div className="bg-emerald-100 text-emerald-700 w-10 h-10 rounded-xl flex items-center justify-center mb-3">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-gray-900 mb-2">Reporting Prayer Time Errors</h3>
+                  <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                    To help us resolve time differences quickly, please include:
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>City & Country Name</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>Prayer Name & Date</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>Calculation Method / Local Mosque Time</span>
+                    </li>
+                  </ul>
+                  <div className="mt-4 pt-3 border-t border-emerald-100 flex items-center gap-2 text-xs text-gray-500">
+                    <AlertCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <span>JazakAllah Khair for your support!</span>
+                  </div>
                 </div>
               </div>
             </div>
