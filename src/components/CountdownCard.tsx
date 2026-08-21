@@ -11,6 +11,7 @@ interface CountdownCardProps {
   data: CityPrayerData;
   dates: FormattedDates;
   currentTimeStr: string;
+  mounted?: boolean;
 }
 
 export const CountdownCard: React.FC<CountdownCardProps> = ({
@@ -18,6 +19,7 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
   data,
   dates,
   currentTimeStr,
+  mounted = true,
 }) => {
   const t = translations[language];
 
@@ -51,10 +53,10 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 bg-emerald-900/40 px-4 py-2.5 rounded-2xl border border-white/10 text-xs sm:text-sm">
           <div className="flex items-center gap-1.5 text-emerald-100 font-medium">
             <Calendar className="w-4 h-4 text-emerald-300" />
-            <span>{dates.gregorian}</span>
+            <span suppressHydrationWarning>{dates.gregorian}</span>
           </div>
           <span className="hidden sm:inline text-white/30">•</span>
-          <div className="text-emerald-200 font-semibold bg-emerald-800/80 px-2.5 py-0.5 rounded-lg border border-emerald-600/30">
+          <div className="text-emerald-200 font-semibold bg-emerald-800/80 px-2.5 py-0.5 rounded-lg border border-emerald-600/30" suppressHydrationWarning>
             {dates.hijri}
           </div>
         </div>
@@ -68,8 +70,8 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
             <Clock className="w-4 h-4" />
             <span>{t.currentTime}</span>
           </div>
-          <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-mono my-1">
-            {currentTimeStr || '00:00:00'}
+          <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-mono my-1" suppressHydrationWarning>
+            {currentTimeStr || '--:--:--'}
           </div>
           <span className="text-xs text-emerald-100/70">
             {t.todayDate}: {dates.gregorian}
@@ -86,22 +88,22 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
           {/* Countdown Digit Boxes */}
           <div className="flex items-center gap-2 sm:gap-3 my-1">
             <div className="flex flex-col items-center">
-              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner">
-                {pad(data.timeRemaining.hours)}
+              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner" suppressHydrationWarning>
+                {mounted ? pad(data.timeRemaining.hours) : '--'}
               </div>
               <span className="text-[10px] text-emerald-200 font-medium uppercase mt-1">{t.hours}</span>
             </div>
             <span className="text-2xl font-bold text-emerald-300 -mt-4">:</span>
             <div className="flex flex-col items-center">
-              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner">
-                {pad(data.timeRemaining.minutes)}
+              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner" suppressHydrationWarning>
+                {mounted ? pad(data.timeRemaining.minutes) : '--'}
               </div>
               <span className="text-[10px] text-emerald-200 font-medium uppercase mt-1">{t.minutes}</span>
             </div>
             <span className="text-2xl font-bold text-emerald-300 -mt-4">:</span>
             <div className="flex flex-col items-center">
-              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner">
-                {pad(data.timeRemaining.seconds)}
+              <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner" suppressHydrationWarning>
+                {mounted ? pad(data.timeRemaining.seconds) : '--'}
               </div>
               <span className="text-[10px] text-emerald-200 font-medium uppercase mt-1">{t.seconds}</span>
             </div>

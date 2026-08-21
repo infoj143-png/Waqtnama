@@ -34,9 +34,10 @@ export function PrayerTimesApp({
   initialApiData = null,
   cityDetails = null,
 }: PrayerTimesAppProps) {
+  const [mounted, setMounted] = useState<boolean>(false);
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const [cityQuery, setCityQuery] = useState<string>(initialCity);
-  const [now, setNow] = useState<Date>(new Date());
+  const [now, setNow] = useState<Date>(() => new Date());
 
   const [rawApiData, setRawApiData] = useState<AladhanApiResponseData | null>(initialApiData);
   const [prayerData, setPrayerData] = useState<CityPrayerData | null>(() => {
@@ -56,8 +57,11 @@ export function PrayerTimesApp({
   const [loading, setLoading] = useState<boolean>(!initialApiData);
   const [error, setError] = useState<string | null>(null);
 
-  // Update live clock every second
+  // Set mounted and update live clock every second
   useEffect(() => {
+    setMounted(true);
+    setNow(new Date());
+
     const timer = setInterval(() => {
       setNow(new Date());
     }, 1000);
@@ -147,36 +151,17 @@ export function PrayerTimesApp({
   }, [language]);
 
   // Format current live time string (HH:MM:SS AM/PM)
-  const currentTimeStr = now.toLocaleTimeString(language === 'ur' ? 'ur-PK' : 'en-US', {
-    hour12: true,
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
-
-  const prayerTimesScheduleJsonLd = prayerData
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'Schedule',
-        name: `Islamic Prayer Times Schedule for ${prayerData.formattedLocation}`,
-        description: `Daily prayer timings (Fajr, Dhuhr, Asr, Maghrib, Isha) for ${prayerData.formattedLocation}`,
-        eventSchedule: prayerData.prayers.map((p) => ({
-          '@type': 'Event',
-          name: p.key.toUpperCase(),
-          startTime: p.time24,
-          location: prayerData.formattedLocation,
-        })),
-      }
-    : null;
+  const currentTimeStr = mounted
+    ? now.toLocaleTimeString(language === 'ur' ? 'ur-PK' : 'en-US', {
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      })
+    : '--:--:--';
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-slate-50">
-      {prayerTimesScheduleJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(prayerTimesScheduleJsonLd) }}
-        />
-      )}
       <div>
         {/* Navigation Header */}
         <Header language={language} onLanguageChange={setLanguage} />
@@ -241,6 +226,7 @@ export function PrayerTimesApp({
                 data={prayerData}
                 dates={dates}
                 currentTimeStr={currentTimeStr}
+                mounted={mounted}
               />
 
               {/* 5 Daily Prayer Cards Grid */}
