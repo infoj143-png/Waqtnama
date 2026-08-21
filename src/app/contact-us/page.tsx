@@ -2,7 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from '@/components/Footer';
-import { Compass, Mail, Clock, ArrowLeft, Send, CheckCircle2, MessageSquare, AlertCircle, User, MessageCircle } from 'lucide-react';
+import { ContactForm } from '@/components/ContactForm';
+import { Compass, Mail, Clock, ArrowLeft, CheckCircle2, MessageSquare, AlertCircle } from 'lucide-react';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
@@ -96,82 +97,8 @@ export default function ContactUsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
               {/* Form Section */}
-              <div className="md:col-span-7 bg-slate-50 border border-emerald-100 p-6 sm:p-8 rounded-2xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                  <MessageCircle className="w-5 h-5 text-emerald-600" />
-                  Send Us a Message
-                </h2>
-
-                <form
-                  action="https://formsubmit.co/infoj.j143@gmail.com"
-                  method="POST"
-                  className="space-y-5"
-                >
-                  {/* FormSubmit Configuration */}
-                  <input type="hidden" name="_subject" value="New Contact Form Submission - WaqtNama" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">
-                      Your Name
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                        <User className="w-5 h-5" />
-                      </div>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        placeholder="e.g. Muhammad Ali"
-                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">
-                      Email Address
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-                        <Mail className="w-5 h-5" />
-                      </div>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        placeholder="yourname@example.com"
-                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-1.5">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      required
-                      placeholder="Type your message, feedback, or prayer time correction details here..."
-                      className="w-full p-3.5 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 text-sm outline-none transition-all resize-y"
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.99]"
-                  >
-                    <Send className="w-4 h-4" />
-                    Send Message
-                  </button>
-                </form>
+              <div className="md:col-span-7">
+                <ContactForm />
               </div>
 
               {/* Info & Guidelines Card */}
