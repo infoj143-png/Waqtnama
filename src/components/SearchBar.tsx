@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Language, translations } from '@/lib/translations';
-import { Search, MapPin, Loader2, Navigation } from 'lucide-react';
+import { Search, MapPin, Loader2, Navigation, ArrowRight } from 'lucide-react';
 
 interface SearchBarProps {
   language: Language;
@@ -11,13 +12,17 @@ interface SearchBarProps {
   isLoading?: boolean;
 }
 
-const QUICK_CITIES = [
-  'Karachi, Pakistan',
-  'Lahore, Pakistan',
-  'London, UK',
-  'New York, USA',
-  'Mecca, Saudi Arabia',
-  'Dubai, UAE',
+const POPULAR_CITIES = [
+  { name: 'Karachi', slug: 'karachi' },
+  { name: 'Lahore', slug: 'lahore' },
+  { name: 'Islamabad', slug: 'islamabad' },
+  { name: 'London', slug: 'london' },
+  { name: 'New York', slug: 'new-york' },
+  { name: 'Dubai', slug: 'dubai' },
+  { name: 'Mecca', slug: 'mecca' },
+  { name: 'Riyadh', slug: 'riyadh' },
+  { name: 'Istanbul', slug: 'istanbul' },
+  { name: 'Jakarta', slug: 'jakarta' },
 ];
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -142,24 +147,26 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </div>
       )}
 
-      {/* Quick city tags */}
+      {/* Popular City static page links */}
       <div className="mt-4 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-500">
         <span className="font-medium text-gray-600">{t.dir === 'rtl' ? 'مقبول شہر:' : 'Popular:'}</span>
-        {QUICK_CITIES.map((city) => (
-          <button
-            key={city}
-            type="button"
-            onClick={() => {
-              setInputVal(city);
-              onSearch(city);
-              setStatusMsg(null);
-            }}
-            aria-label={`Select city ${city}`}
-            className="min-h-[36px] px-3 py-1.5 bg-emerald-50/80 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 font-medium rounded-md border border-emerald-100 transition-colors flex items-center justify-center"
+        {POPULAR_CITIES.map((city) => (
+          <Link
+            key={city.slug}
+            href={`/prayer-times/${city.slug}`}
+            className="min-h-[32px] px-3 py-1 bg-emerald-50/80 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 font-medium rounded-md border border-emerald-100 transition-colors flex items-center justify-center"
           >
-            {city}
-          </button>
+            {city.name}
+          </Link>
         ))}
+
+        <Link
+          href="/prayer-times"
+          className="min-h-[32px] px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-md transition-colors flex items-center justify-center gap-1 ml-auto"
+        >
+          <span>{language === 'ur' ? 'تمام شہر دیکھیں' : 'Browse all cities'}</span>
+          <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+        </Link>
       </div>
     </div>
   );

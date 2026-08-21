@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { Language, translations } from '@/lib/translations';
 import {
   processAladhanApiResponse,
@@ -15,25 +16,44 @@ import { SearchBar } from '@/components/SearchBar';
 import { CountdownCard } from '@/components/CountdownCard';
 import { PrayerGrid } from '@/components/PrayerGrid';
 import { QiblaCompass } from '@/components/QiblaCompass';
-import { Compass, ShieldCheck, AlertCircle, Loader2, Heart } from 'lucide-react';
+import { Compass, ShieldCheck, AlertCircle, Loader2, Heart, BookOpen, Clock, Globe, MapPin } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { locationNameToSlug } from '@/lib/citySlug';
+import { CityDetails } from '@/lib/cityDetails';
 
 interface PrayerTimesAppProps {
   initialCity?: string;
   initialLanguage?: Language;
+  initialApiData?: AladhanApiResponseData | null;
+  cityDetails?: CityDetails | null;
 }
 
-export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLanguage = 'en' }: PrayerTimesAppProps) {
+export function PrayerTimesApp({
+  initialCity = 'Lahore, Pakistan',
+  initialLanguage = 'en',
+  initialApiData = null,
+  cityDetails = null,
+}: PrayerTimesAppProps) {
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const [cityQuery, setCityQuery] = useState<string>(initialCity);
   const [now, setNow] = useState<Date>(new Date());
 
-  const [rawApiData, setRawApiData] = useState<AladhanApiResponseData | null>(null);
-  const [prayerData, setPrayerData] = useState<CityPrayerData | null>(null);
-  const [dates, setDates] = useState<FormattedDates>({ gregorian: '', hijri: '' });
+  const [rawApiData, setRawApiData] = useState<AladhanApiResponseData | null>(initialApiData);
+  const [prayerData, setPrayerData] = useState<CityPrayerData | null>(() => {
+    if (initialApiData) {
+      return processAladhanApiResponse(initialApiData, initialCity, new Date());
+    }
+    return null;
+  });
+  const [dates, setDates] = useState<FormattedDates>(() => {
+    if (initialApiData) {
+      const processed = processAladhanApiResponse(initialApiData, initialCity, new Date());
+      return getFormattedDates(new Date(), initialLanguage, processed.hijriDateApi);
+    }
+    return { gregorian: '', hijri: '' };
+  });
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(!initialApiData);
   const [error, setError] = useState<string | null>(null);
 
   // Update live clock every second
@@ -57,7 +77,7 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
 
       if (updateUrl && typeof window !== 'undefined') {
         const slug = locationNameToSlug(query);
-        window.history.pushState({}, '', `/${slug}`);
+        window.history.pushState({}, '', `/prayer-times/${slug}`);
       }
     } catch (err: unknown) {
       console.error('Error fetching prayer times:', err);
@@ -82,7 +102,7 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
           setCityQuery(locationName);
           if (typeof window !== 'undefined') {
             const slug = locationNameToSlug(locationName);
-            window.history.pushState({}, '', `/${slug}`);
+            window.history.pushState({}, '', `/prayer-times/${slug}`);
           }
         } else {
           const detectedCity = data.meta?.timezone ? data.meta.timezone.split('/')[1]?.replace(/_/g, ' ') : 'Your Location';
@@ -101,10 +121,12 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
     []
   );
 
-  // Initial load
+  // Initial load if no initialApiData was supplied
   useEffect(() => {
-    fetchPrayerTimes(initialCity, false);
-  }, [fetchPrayerTimes, initialCity]);
+    if (!initialApiData) {
+      fetchPrayerTimes(initialCity, false);
+    }
+  }, [fetchPrayerTimes, initialCity, initialApiData]);
 
   // Recalculate prayer timings/countdown when rawApiData, language, or now updates
   useEffect(() => {
@@ -169,6 +191,29 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
             isLoading={loading}
           />
 
+          {/* City Unique Introductory Paragraph & Badges */}
+          {cityDetails && (
+            <div className="mb-6 bg-white border border-emerald-100 rounded-2xl p-5 shadow-sm space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
+                  <MapPin className="w-3.5 h-3.5 text-emerald-700" />
+                  {cityDetails.name}, {cityDetails.country}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
+                  <Clock className="w-3.5 h-3.5 text-slate-500" />
+                  {cityDetails.timezone}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200/60 px-3 py-1 rounded-full">
+                  <Globe className="w-3.5 h-3.5 text-amber-600" />
+                  {cityDetails.method}
+                </span>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed font-normal">
+                {cityDetails.introParagraph}
+              </p>
+            </div>
+          )}
+
           {/* Error Banner */}
           {error && (
             <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 flex items-center gap-3">
@@ -206,8 +251,64 @@ export function PrayerTimesApp({ initialCity = 'Lahore, Pakistan', initialLangua
             </>
           ) : null}
 
+          {/* Internal Links to Guides Section for SEO Equity */}
+          <div className="mt-8 bg-white rounded-2xl border border-emerald-100 p-6 shadow-sm">
+            <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-emerald-600" />
+              {language === 'ur' ? 'اسلامی رہنما اور ذرائع' : 'Islamic Guides & Prayer Resources'}
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 mb-4">
+              {language === 'ur'
+                ? 'نماز کے اوقات، رمضان کے روزے اور قبلہ کے رخ سے متعلق تفصیلی مضامین پڑھیں:'
+                : 'Explore detailed guides on prayer time calculations, Ramadan fasting schedules, and finding the Qibla direction:'}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Link
+                href="/how-prayer-times-calculated"
+                className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 hover:bg-emerald-100/70 transition-all block group"
+              >
+                <h4 className="font-bold text-emerald-900 text-sm mb-1 group-hover:text-emerald-700">
+                  {language === 'ur' ? 'نماز کے اوقات کا حساب' : 'Prayer Time Calculations'}
+                </h4>
+                <p className="text-xs text-gray-600">
+                  {language === 'ur'
+                    ? 'سورج کے زاوئیے اور فلکیاتی طریقہ کار سمجھیں۔'
+                    : 'Learn how solar angles, shadow ratios, and calculation standards work.'}
+                </p>
+              </Link>
+
+              <Link
+                href="/ramadan-timing-guide"
+                className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 hover:bg-emerald-100/70 transition-all block group"
+              >
+                <h4 className="font-bold text-emerald-900 text-sm mb-1 group-hover:text-emerald-700">
+                  {language === 'ur' ? 'رمضان کے اوقات کی رہنمائی' : 'Ramadan Timing Guide'}
+                </h4>
+                <p className="text-xs text-gray-600">
+                  {language === 'ur'
+                    ? 'سحری اور افطاری کے اوقات اور روزے کے قواعد۔'
+                    : 'Suhoor and Iftar scheduling rules, fasting tips, and Ramadan calendar info.'}
+                </p>
+              </Link>
+
+              <Link
+                href="/qibla-direction-guide"
+                className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 hover:bg-emerald-100/70 transition-all block group"
+              >
+                <h4 className="font-bold text-emerald-900 text-sm mb-1 group-hover:text-emerald-700">
+                  {language === 'ur' ? 'قبلہ رخ معلوم کرنے کی گائیڈ' : 'Qibla Direction Guide'}
+                </h4>
+                <p className="text-xs text-gray-600">
+                  {language === 'ur'
+                    ? 'دنیا کے کسی بھی مقام سے کعبہ کا رخ دریافت کریں۔'
+                    : 'How to accurately locate the direction of the Kaaba from anywhere.'}
+                </p>
+              </Link>
+            </div>
+          </div>
+
           {/* Feature Highlights Banner */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
               <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
                 <Compass className="w-5 h-5" />

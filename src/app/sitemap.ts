@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
   const cityEntries: MetadataRoute.Sitemap = ALL_CITY_SLUGS.map((city) => ({
-    url: `${baseUrl}/${city}`,
+    url: `${baseUrl}/prayer-times/${city}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
     priority: 0.8,
@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/prayer-times`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/how-prayer-times-calculated`,

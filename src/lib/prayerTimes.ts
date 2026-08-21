@@ -66,7 +66,6 @@ export function parseLocationQuery(query: string): { city: string; country: stri
 }
 
 function format12Hour(time24: string): string {
-  // Strip timezone suffix if present (e.g., "05:15 (PKT)" -> "05:15")
   const cleanTime = time24.split(' ')[0];
   const [hoursStr, minutesStr] = cleanTime.split(':');
   let hours = parseInt(hoursStr, 10);
@@ -119,7 +118,7 @@ export function processAladhanApiResponse(
   let currentPrayerKey: PrayerKey = 'isha';
   let nextPrayerKey: PrayerKey = 'fajr';
   let nextPrayerDate: Date = new Date(prayers[0].dateObj);
-  nextPrayerDate.setDate(nextPrayerDate.getDate() + 1); // Fajr of tomorrow by default
+  nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
 
   for (let i = 0; i < prayers.length; i++) {
     const prayer = prayers[i];
@@ -172,5 +171,44 @@ export function processAladhanApiResponse(
       totalSeconds: totalSecondsRemaining,
     },
     hijriDateApi,
+  };
+}
+
+export function getDefaultFallbackApiData(): AladhanApiResponseData {
+  return {
+    timings: {
+      Fajr: '05:15',
+      Sunrise: '06:35',
+      Dhuhr: '12:15',
+      Asr: '15:30',
+      Sunset: '17:55',
+      Maghrib: '17:55',
+      Isha: '19:15',
+      Imsak: '05:05',
+      Midnight: '00:15',
+    },
+    date: {
+      readable: '01 Jan 2025',
+      timestamp: '1735689600',
+      hijri: {
+        date: '01-07-1446',
+        day: '1',
+        month: {
+          number: 7,
+          en: 'Rajab',
+          ar: 'رجب',
+        },
+        year: '1446',
+      },
+    },
+    meta: {
+      latitude: 0,
+      longitude: 0,
+      timezone: 'UTC',
+      method: {
+        id: 2,
+        name: 'Islamic Society of North America (ISNA)',
+      },
+    },
   };
 }
