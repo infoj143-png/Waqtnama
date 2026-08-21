@@ -4,7 +4,10 @@ import './globals.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX';
-const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsenseClientId =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID ||
+  process.env.NEXT_PUBLIC_ADSENSE_ID ||
+  'ca-pub-1171531038397592';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -94,13 +97,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.aladhan.com" />
         <link rel="dns-prefetch" href="https://api.aladhan.com" />
-        {adsenseClientId && (
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
-            crossOrigin="anonymous"
-          ></script>
-        )}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body className="bg-slate-50 text-gray-900 min-h-screen font-sans antialiased selection:bg-emerald-200 selection:text-emerald-900">
         {children}
