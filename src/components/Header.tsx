@@ -5,11 +5,14 @@ import { Language, translations } from '@/lib/translations';
 import { Compass, Globe } from 'lucide-react';
 
 interface HeaderProps {
-  language: Language;
-  onLanguageChange: (lang: Language) => void;
+  language?: Language;
+  onLanguageChange?: (lang: Language) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ language, onLanguageChange }) => {
+export const Header: React.FC<HeaderProps> = ({
+  language = 'en',
+  onLanguageChange = () => {},
+}) => {
   const t = translations[language];
 
   return (
