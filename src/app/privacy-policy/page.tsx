@@ -2,21 +2,21 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from '@/components/Footer';
-import { Compass, Shield, ArrowLeft, Mail, Cookie, Lock, FileText, MapPin, Server } from 'lucide-react';
+import { Compass, Shield, ArrowLeft, Mail, Cookie, Lock, MapPin, Server, Phone, ExternalLink } from 'lucide-react';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - WaqtNama',
   description:
-    'Privacy Policy for WaqtNama. Learn how we handle browser geolocation, Google AdSense cookies, FormSubmit contact processing, Google Analytics, and user data privacy.',
+    'Privacy Policy for WaqtNama. Learn about our Google AdSense cookie disclosures, data collection practices, analytics, cookie management opt-out options, and contact details (+92 344 6110659).',
   alternates: {
     canonical: `${siteUrl}/privacy-policy`,
   },
   openGraph: {
     title: 'Privacy Policy - WaqtNama',
     description:
-      'Read the official Privacy Policy for WaqtNama regarding geolocation usage, Google AdSense, FormSubmit, and data protection.',
+      'Read the official Privacy Policy for WaqtNama regarding Google AdSense cookies, user data protection, cookie management, and official contact information.',
     url: `${siteUrl}/privacy-policy`,
     siteName: 'WaqtNama',
     type: 'website',
@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
     name: 'Privacy Policy - WaqtNama',
     url: `${siteUrl}/privacy-policy`,
     description:
-      'WaqtNama Privacy Policy covering optional geolocation usage, FormSubmit message processing, Google Analytics, Google AdSense cookies, and user data protection.',
+      'WaqtNama Privacy Policy detailing Google AdSense cookie disclosures, analytics, log files, cookie management options, and contact details (+92 344 6110659).',
   };
 
   return (
@@ -70,7 +70,7 @@ export default function PrivacyPolicyPage() {
             {/* Title Badge */}
             <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 font-semibold px-3.5 py-1.5 rounded-full text-xs sm:text-sm mb-4">
               <Shield className="w-4 h-4" />
-              Privacy Policy
+              Privacy Policy & Ad Disclosures
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">
@@ -82,110 +82,111 @@ export default function PrivacyPolicyPage() {
 
             <div className="space-y-8 text-gray-700 text-sm sm:text-base leading-relaxed">
               <p>
-                At <strong>WaqtNama</strong> (accessible from <a href={siteUrl} className="text-emerald-700 underline font-medium">{siteUrl}</a>), the privacy of our visitors is paramount. This Privacy Policy outlines the types of information collected and recorded by WaqtNama, how it is processed, and your rights regarding your data.
+                At <strong>WaqtNama</strong> (accessible from <a href={siteUrl} className="text-emerald-700 underline font-medium">{siteUrl}</a>), protecting the privacy of our visitors is one of our top priorities. This Privacy Policy document outlines the types of information collected and recorded by WaqtNama, our third-party advertising disclosures, and how you can manage or opt out of data processing.
               </p>
 
-              {/* Section 1: Personal Data */}
-              <section className="space-y-3">
-                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
-                  <Lock className="w-5 h-5 text-emerald-600" />
-                  Personal Data Collection
-                </h2>
-                <p>
-                  We do <strong>not</strong> collect or store personally identifiable information (PII) such as full names, home addresses, or phone numbers. You can freely browse and check daily prayer times, Qibla directions, and calendar dates without creating an account or providing sensitive personal credentials.
-                </p>
-              </section>
-
-              {/* Section 2: Browser Geolocation Usage */}
-              <section className="space-y-3">
-                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
-                  <MapPin className="w-5 h-5 text-emerald-600" />
-                  Browser Geolocation Usage
-                </h2>
-                <p>
-                  WaqtNama offers an optional automatic location detection feature to allow users to calculate local prayer timings and compute Qibla compass bearing accurately.
-                </p>
-                <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                  <li>
-                    <strong>Optional & On-Demand:</strong> Accessing your device location requires your explicit browser permission.
-                  </li>
-                  <li>
-                    <strong>Client-Side & Transient Processing:</strong> Geolocation coordinates (latitude and longitude) are processed purely in real time on the client side to query timing calculation endpoints and align compass bearings.
-                  </li>
-                  <li>
-                    <strong>No Location Tracking or Storage:</strong> Your precise geographic coordinates are never stored on our servers, transmitted to external databases, or tracked across sessions.
-                  </li>
-                </ul>
-              </section>
-
-              {/* Section 3: Third-Party Processors */}
-              <section className="space-y-3">
-                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
-                  <Server className="w-5 h-5 text-emerald-600" />
-                  Third-Party Data Processors
-                </h2>
-                <p>
-                  To provide our core utility features, analytics, and contact options, WaqtNama integrates trusted third-party service providers:
-                </p>
-                <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                  <li>
-                    <strong>FormSubmit (Contact Form Processor):</strong> Messages submitted via our Contact Us form are processed securely through <a href="https://formsubmit.co" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium">FormSubmit.co</a> AJAX API endpoint to route user inquiries to our administration team. No contact messages are sold or shared with advertisers.
-                  </li>
-                  <li>
-                    <strong>Google Analytics:</strong> We use Google Analytics to measure aggregated website performance, visitor counts, and usage trends. Google Analytics collects anonymized interaction statistics without associating them with personal identities.
-                  </li>
-                  <li>
-                    <strong>Aladhan API:</strong> Astronomical timing queries for city schedules are fetched directly via Aladhan API endpoints.
-                  </li>
-                </ul>
-              </section>
-
-              {/* Section 4: Advertising & Cookies */}
+              {/* Section 1: Google AdSense & Third-Party Cookies */}
               <section className="space-y-3">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
                   <Cookie className="w-5 h-5 text-emerald-600" />
-                  Google AdSense & Cookies
+                  Google AdSense & Third-Party Cookie Disclosures
                 </h2>
                 <p>
-                  WaqtNama uses third-party advertising services, including <strong>Google AdSense</strong>, to support site operations. Google uses cookies, web beacons, and unique identifiers to serve non-intrusive advertisements based on previous site visits.
+                  WaqtNama utilizes third-party advertising services, including <strong>Google AdSense</strong>, to display advertisements on our platform:
                 </p>
                 <ul className="list-disc pl-5 space-y-2 text-gray-600">
                   <li>
-                    <strong>DART Cookies:</strong> Google&#39;s use of advertising cookies enables it and its partners to serve relevant ads to users based on visits to WaqtNama and other internet sites.
+                    <strong>Use of Cookies:</strong> Third-party vendors, including Google, use cookies (such as the DART cookie) to serve advertisements to users based on prior visits to WaqtNama or other websites across the Internet.
                   </li>
                   <li>
-                    <strong>Ad Personalization Opt-Out:</strong> Users may opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium">aboutads.info</a>.
+                    <strong>Ad Personalization:</strong> Google&#39;s use of advertising cookies enables it and its partners to serve personalized ads based on your visit to our website and/or other sites on the Internet.
+                  </li>
+                  <li>
+                    <strong>Non-Personal Identification:</strong> The cookies used by third-party ad networks do not collect personally identifiable information such as your name, email address, physical address, or phone number.
                   </li>
                 </ul>
               </section>
 
-              {/* Section 5: Log Files */}
+              {/* Section 2: Instructions for Managing & Opting-Out of Cookies */}
               <section className="space-y-3">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
-                  <FileText className="w-5 h-5 text-emerald-600" />
-                  Standard Log Files
+                  <Lock className="w-5 h-5 text-emerald-600" />
+                  How to Manage & Opt-Out of Cookies
                 </h2>
                 <p>
-                  WaqtNama follows standard web hosting procedures using server log files. The information collected includes IP addresses, browser types, Internet Service Provider (ISP), date/time stamps, referring pages, and click counts. These details are used solely to analyze technical site performance and prevent abuse, and are not linked to any personally identifiable information.
+                  Users have complete control over their cookie preferences and can opt out of personalized advertising at any time:
+                </p>
+                <ul className="list-disc pl-5 space-y-2 text-gray-600">
+                  <li>
+                    <strong>Google Ad Settings:</strong> You can opt out of personalized Google advertising by visiting the official <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium inline-flex items-center gap-1">Google Ads Settings <ExternalLink className="w-3.5 h-3.5" /></a> page.
+                  </li>
+                  <li>
+                    <strong>Third-Party Ad Networks:</strong> Alternatively, you can opt out of third-party vendor use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium inline-flex items-center gap-1">aboutads.info <ExternalLink className="w-3.5 h-3.5" /></a> or the <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline font-medium inline-flex items-center gap-1">Network Advertising Initiative Consumer Opt-Out <ExternalLink className="w-3.5 h-3.5" /></a>.
+                  </li>
+                  <li>
+                    <strong>Browser Settings:</strong> You can disable or selectively turn off our cookies or third-party cookies in your browser options (e.g., Chrome, Firefox, Safari, Edge). However, disabling cookies may affect how you interact with our website features.
+                  </li>
+                </ul>
+              </section>
+
+              {/* Section 3: Data Collection Practices & Analytics */}
+              <section className="space-y-3">
+                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
+                  <Server className="w-5 h-5 text-emerald-600" />
+                  Data Collection Practices & Analytics
+                </h2>
+                <p>
+                  We are committed to transparent data practices. WaqtNama collects only non-personally identifiable information required to deliver accurate timing services:
+                </p>
+                <ul className="list-disc pl-5 space-y-2 text-gray-600">
+                  <li>
+                    <strong>Google Analytics:</strong> We use Google Analytics to analyze site traffic, visitor statistics, and platform performance. Google Analytics processes anonymized metrics (such as page views, device types, and generalized geographic locations) without associating data with individual identities.
+                  </li>
+                  <li>
+                    <strong>Non-Personally Identifiable Log Files:</strong> Like most standard web servers, WaqtNama uses standard log files. Information stored includes Internet Protocol (IP) addresses, browser type, Internet Service Provider (ISP), referring/exit pages, date/time stamps, and click statistics. These log files are strictly used for technical system administration, security verification, and performance analysis.
+                  </li>
+                  <li>
+                    <strong>Transient Client-Side Geolocation:</strong> When you request localized prayer timings or Qibla orientation, browser location coordinates (latitude & longitude) are processed purely in real-time on your client device and are never saved or stored on our servers.
+                  </li>
+                </ul>
+              </section>
+
+              {/* Section 4: User Rights & Information Security */}
+              <section className="space-y-3">
+                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 text-emerald-900">
+                  <MapPin className="w-5 h-5 text-emerald-600" />
+                  Children&#39;s Privacy & User Rights
+                </h2>
+                <p>
+                  WaqtNama does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you believe that your child provided this kind of information on our website, we strongly encourage you to contact us immediately, and we will do our best efforts to promptly remove such information from our records.
                 </p>
               </section>
 
               {/* Contact Card */}
               <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-200 mt-8">
-                <h3 className="text-lg font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                <h2 className="text-lg font-bold text-emerald-900 mb-2 flex items-center gap-2">
                   <Mail className="w-5 h-5 text-emerald-700" />
-                  Questions & Privacy Requests
-                </h3>
+                  Official Contact & Privacy Inquiries
+                </h2>
                 <p className="text-emerald-950 text-sm leading-relaxed mb-4">
-                  If you have questions or concerns regarding this Privacy Policy or data handling, please contact us:
+                  If you have any questions, require more information about our Privacy Policy, or wish to make privacy requests, please feel free to reach out to us:
                 </p>
-                <a
-                  href="mailto:infoj.j143@gmail.com"
-                  className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm"
-                >
-                  <Mail className="w-4 h-4" />
-                  infoj.j143@gmail.com
-                </a>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm font-semibold text-emerald-900">
+                  <a
+                    href="mailto:infoj.j143@gmail.com"
+                    className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm"
+                  >
+                    <Mail className="w-4 h-4" />
+                    infoj.j143@gmail.com
+                  </a>
+                  <a
+                    href="tel:+923446110659"
+                    className="inline-flex items-center gap-2 bg-white hover:bg-emerald-100 text-emerald-800 text-sm px-4 py-2.5 rounded-xl border border-emerald-300 transition-all shadow-sm"
+                  >
+                    <Phone className="w-4 h-4 text-emerald-700" />
+                    <span>Phone / WhatsApp: +92 344 6110659</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
