@@ -2,21 +2,21 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from '@/components/Footer';
-import { Compass, Clock, Globe2, ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Compass, Clock, ShieldCheck, ArrowLeft, CheckCircle2, MapPin } from 'lucide-react';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
 export const metadata: Metadata = {
-  title: 'About Us - Calculated Prayer Times & Qibla Direction',
+  title: 'About Us - Accurate Islamic Prayer Times, Qibla & Hijri Calendar',
   description:
-    'Learn about WaqtNama. We provide reliable Islamic prayer times, Qibla direction, and Hijri calendar dates for all cities worldwide using authentic calculation methods.',
+    'Learn about WaqtNama: a premier Islamic utility platform offering accurate prayer timings, Qibla direction, and Hijri calendar updates across Pakistan and globally.',
   alternates: {
     canonical: `${siteUrl}/about-us`,
   },
   openGraph: {
-    title: 'About WaqtNama - Calculated Prayer Times & Qibla Direction',
+    title: 'About WaqtNama - Islamic Prayer Times & Qibla Direction',
     description:
-      'Discover WaqtNama: your trusted global Islamic companion for calculated prayer times, Qibla compass, and Hijri calendar dates.',
+      'Discover WaqtNama: your reliable digital companion for accurate geographical prayer timing calculations, Qibla compass, and Hijri calendar updates across Pakistan and worldwide.',
     url: `${siteUrl}/about-us`,
     siteName: 'WaqtNama',
     type: 'website',
@@ -30,12 +30,14 @@ export default function AboutUsPage() {
     name: 'About WaqtNama',
     url: `${siteUrl}/about-us`,
     description:
-      'WaqtNama provides calculated prayer times and Qibla direction for all cities worldwide. Our goal is to help Muslims stay connected with their daily prayers.',
+      'WaqtNama is an accurate Islamic utility platform providing prayer timings, Qibla direction, and Hijri calendar updates for users across Pakistan and worldwide.',
     publisher: {
       '@type': 'Organization',
       name: 'WaqtNama',
       url: siteUrl,
       logo: `${siteUrl}/favicon.ico`,
+      telephone: '+923446110659',
+      email: 'infoj.j143@gmail.com',
     },
   };
 
@@ -80,17 +82,17 @@ export default function AboutUsPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-6">
-              Empowering Muslims Worldwide with Precision & Clarity
+              Accurate Islamic Utility Platform for Prayer Timings, Qibla & Hijri Calendar
             </h1>
 
             {/* Content Body */}
             <div className="space-y-6 text-gray-700 text-base sm:text-lg leading-relaxed">
               <p>
-                Welcome to <strong className="text-emerald-800">WaqtNama</strong>, your dedicated digital platform created to provide calculated Islamic prayer times and Qibla direction for cities across the globe based on recognized astronomical methods.
+                Welcome to <strong className="text-emerald-800">WaqtNama</strong>, an authentic and dedicated Islamic utility platform engineered to offer highly accurate daily prayer timings, precise Qibla direction, and real-time Hijri calendar updates for users across Pakistan and worldwide.
               </p>
 
               <p>
-                Prayer (Salah) is the cornerstone of Islamic practice, serving as a direct connection between the believer and Allah Almighty. Recognizing the importance of performing prayers on time, WaqtNama is designed to deliver instantaneous, trustworthy, and daily updated timings for Fajr, Dhuhr, Asr, Maghrib, and Isha. Whether you are living in a bustling metropolis like London, New York, or Karachi, or traveling to a remote destination, WaqtNama ensures that you stay connected to your daily prayer schedule with ease and confidence.
+                Performing Salah on time is an integral pillar of Islamic life. WaqtNama was created to bridge the need for dependable, instant, and geographically precise prayer schedules. Whether you reside in major Pakistani cities such as Karachi, Lahore, Islamabad, Rawalpindi, Peshawar, Faisalabad, or Quetta, or are traveling abroad, WaqtNama serves as your reliable daily companion.
               </p>
 
               <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,51 +101,59 @@ export default function AboutUsPage() {
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-base mb-1">Authentic Calculations</h3>
+                    <h2 className="font-bold text-gray-900 text-base mb-1">Authentic Astronomical Calculations</h2>
                     <p className="text-xs text-gray-600 leading-normal">
-                      We integrate verified astronomical calculation standards (such as ISNA, Muslim World League, Umm al-Qura, and Karachi University) for calculated prayer schedules based on astronomical methods.
+                      We support globally recognized astronomical calculation standards—including the University of Islamic Sciences Karachi, Muslim World League (MWL), Umm al-Qura, and ISNA—ensuring precise timing for Fajr, Dhuhr, Asr, Maghrib, and Isha.
                     </p>
                   </div>
                 </div>
 
                 <div className="bg-slate-50 p-5 rounded-2xl border border-emerald-100 flex items-start gap-3.5">
                   <div className="bg-emerald-100 text-emerald-700 p-2.5 rounded-xl">
-                    <Globe2 className="w-6 h-6" />
+                    <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-base mb-1">Global Accessibility</h3>
+                    <h2 className="font-bold text-gray-900 text-base mb-1">Geographical Precision Across Pakistan & Beyond</h2>
                     <p className="text-xs text-gray-600 leading-normal">
-                      Instant search support for thousands of cities worldwide, with automatic geolocation detection for instant localized prayer schedules.
+                      With coverage tailored for every district and city across Pakistan as well as global locations, WaqtNama calculates timings based on exact geographical coordinates (latitude and longitude).
                     </p>
                   </div>
                 </div>
               </div>
 
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight pt-2">
+                Our Mission & Community Service Commitment
+              </h2>
               <p>
-                To provide dependable timings, WaqtNama utilizes recognized calculation methods adapted to local astronomical conventions around the world. In addition to daily prayer times, WaqtNama features an interactive Qibla direction compass, Hijri calendar dates, and live prayer countdown timers. Every feature is crafted with care to ensure ease of use on mobile devices, tablets, and desktops alike.
+                At WaqtNama, our overarching goal is community service. We believe that access to essential Islamic utilities should be completely free, fast, reliable, and accessible to everyone without invasive tracking or intrusive ad formats.
               </p>
 
               <p>
-                We believe that reliable spiritual utility tools should be free, accessible, fast, and completely user-friendly. WaqtNama is continuously maintained and optimized so that every Muslim can seamlessly incorporate timing schedules into their daily routines.
+                In addition to accurate daily prayer schedules, WaqtNama provides:
               </p>
+              <ul className="list-disc pl-6 space-y-2 text-base text-gray-700">
+                <li>An interactive real-time Qibla direction compass aligned with your exact coordinates.</li>
+                <li>Up-to-date Hijri calendar information and major Islamic date highlights (such as Ramadan and 12 Rabi ul Awwal).</li>
+                <li>Live countdown timers for upcoming prayers to help users plan their daily routines effectively.</li>
+              </ul>
 
               <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-200 mt-8">
-                <h3 className="text-xl font-bold text-emerald-900 mb-3 flex items-center gap-2">
+                <h2 className="text-xl font-bold text-emerald-900 mb-3 flex items-center gap-2">
                   <ShieldCheck className="w-6 h-6 text-emerald-700" />
-                  Our Core Commitments
-                </h3>
-                <ul className="space-y-2 text-emerald-950 text-sm sm:text-base">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    Providing calculated and verified prayer schedules globally.
+                  Our Core Pillars of Service
+                </h2>
+                <ul className="space-y-2.5 text-emerald-950 text-sm sm:text-base">
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Reliability & Accuracy:</strong> Delivering verified prayer schedules based on rigorous geographical calculations and recognized Islamic authorities.</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    Maintaining a clean, mobile-first, and ad-friendly user experience.
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Community-First Mindset:</strong> Providing essential spiritual tools as a free utility for the Muslim Ummah across Pakistan and worldwide.</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    Protecting user privacy with transparent and lightweight data practices.
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>User Respect & Compliance:</strong> Maintaining a clean, fast-loading, mobile-optimized experience that complies with web standard privacy guidelines.</span>
                   </li>
                 </ul>
               </div>
