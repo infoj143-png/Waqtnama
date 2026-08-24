@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How Prayer Times Are Calculated - Complete Astronomical Guide',
     description:
-      'Detailed guide on astronomical formulas, solar angles, and Islamic juristic rules used for calculating accurate daily prayer schedules worldwide.',
+      'Detailed guide on astronomical formulas, solar angles, and Islamic juristic rules used for calculating daily prayer schedules worldwide.',
     url: `${siteUrl}/how-prayer-times-calculated`,
     siteName: 'WaqtNama',
     type: 'article',
@@ -224,7 +224,7 @@ export default function HowPrayerTimesCalculatedPage() {
                 Accuracy Commitment at WaqtNama
               </h3>
               <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                At WaqtNama, we partner with verified astronomical data sources including the Aladhan API and standard juristic conventions to deliver exact times for over 50,000 cities worldwide. Always ensure your local city settings align with your community&apos;s preferred calculation method for optimal peace of mind.
+                At WaqtNama, we partner with verified astronomical data sources including the Aladhan API and standard juristic conventions to deliver calculated prayer timings based on astronomical methods for cities worldwide. Always ensure your local city settings align with your community&apos;s preferred calculation method for optimal peace of mind.
               </p>
             </section>
           </article>

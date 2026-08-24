@@ -2,8 +2,12 @@ import { AladhanApiResponseData } from '@/lib/prayerTimes';
 
 const cache = new Map<string, AladhanApiResponseData>();
 
-export async function getPrayerTimes(city: string, country: string): Promise<AladhanApiResponseData> {
-  const cacheKey = `${city.toLowerCase().trim()}-${country.toLowerCase().trim()}`;
+export async function getPrayerTimes(
+  city: string,
+  country: string,
+  method: number = 2
+): Promise<AladhanApiResponseData> {
+  const cacheKey = `${city.toLowerCase().trim()}-${country.toLowerCase().trim()}-${method}`;
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey)!;
   }
@@ -12,7 +16,7 @@ export async function getPrayerTimes(city: string, country: string): Promise<Ala
   while (attempts < 3) {
     try {
       const res = await fetch(
-        `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=2`
+        `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=${method}`
       );
 
       if (res.status === 429) {
@@ -44,9 +48,13 @@ export async function getPrayerTimes(city: string, country: string): Promise<Ala
   throw new Error('Failed to fetch prayer times after multiple retries');
 }
 
-export async function getPrayerTimesByCoords(latitude: number, longitude: number): Promise<AladhanApiResponseData> {
+export async function getPrayerTimesByCoords(
+  latitude: number,
+  longitude: number,
+  method: number = 2
+): Promise<AladhanApiResponseData> {
   const res = await fetch(
-    `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=2`
+    `https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=${method}`
   );
   if (!res.ok) {
     throw new Error(`Failed to fetch prayer times: ${res.statusText}`);

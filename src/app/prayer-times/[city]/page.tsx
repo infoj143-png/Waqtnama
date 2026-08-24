@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import { PrayerTimesApp } from '@/components/PrayerTimesApp';
-import { ALL_CITY_SLUGS, slugToLocationName } from '@/lib/citySlug';
+import { PRIMARY_CITY_SLUGS, getCanonicalCitySlug, slugToLocationName } from '@/lib/citySlug';
 import { getCityDetails } from '@/lib/cityDetails';
 import { parseLocationQuery, AladhanApiResponseData, getDefaultFallbackApiData } from '@/lib/prayerTimes';
 import { getPrayerTimes } from '@/../lib/Api';
@@ -15,19 +16,20 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return ALL_CITY_SLUGS.map((city) => ({
+  return PRIMARY_CITY_SLUGS.map((city) => ({
     city,
   }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const cityDetails = getCityDetails(params.city);
-  const locationName = slugToLocationName(params.city);
+  const canonicalSlug = getCanonicalCitySlug(params.city);
+  const cityDetails = getCityDetails(canonicalSlug);
+  const locationName = slugToLocationName(canonicalSlug);
   const cityName = cityDetails.name || locationName.split(',')[0];
 
   const fullTitle = `${cityName} Prayer Times Today | Fajr, Dhuhr, Asr, Maghrib, Isha - WaqtNama`;
-  const description = `Accurate daily prayer times for ${locationName}. View Fajr, Dhuhr, Asr, Maghrib, and Isha timings, ${cityDetails.method} calculation, ${cityDetails.timezone} timezone info, live countdown, and Hijri calendar dates.`;
-  const pageUrl = `${siteUrl}/prayer-times/${params.city}`;
+  const description = `Daily prayer times for ${locationName}. View Fajr, Dhuhr, Asr, Maghrib, and Isha timings, ${cityDetails.method} calculation, ${cityDetails.timezone} timezone info, live countdown, and Hijri calendar dates.`;
+  const pageUrl = `${siteUrl}/prayer-times/${canonicalSlug}`;
 
   return {
     title: {
@@ -74,15 +76,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CityPrayerTimesPage({ params }: Props) {
-  const locationName = slugToLocationName(params.city);
-  const cityDetails = getCityDetails(params.city);
-  const pageUrl = `${siteUrl}/prayer-times/${params.city}`;
+  const canonicalSlug = getCanonicalCitySlug(params.city);
+  if (params.city !== canonicalSlug) {
+    redirect(`/prayer-times/${canonicalSlug}`);
+  }
+
+  const locationName = slugToLocationName(canonicalSlug);
+  const cityDetails = getCityDetails(canonicalSlug);
+  const pageUrl = `${siteUrl}/prayer-times/${canonicalSlug}`;
 
   const { city, country } = parseLocationQuery(locationName);
   let initialApiData: AladhanApiResponseData | null = null;
 
   try {
-    initialApiData = await getPrayerTimes(city, country);
+    initialApiData = await getPrayerTimes(city, country, cityDetails.methodId);
   } catch {
     initialApiData = getDefaultFallbackApiData();
   }
@@ -126,7 +133,7 @@ export default async function CityPrayerTimesPage({ params }: Props) {
         '@id': `${pageUrl}/#webpage`,
         url: pageUrl,
         name: `${cityDetails.name} Prayer Times Today | Fajr, Dhuhr, Asr, Maghrib, Isha - WaqtNama`,
-        description: `Accurate Fajr, Dhuhr, Asr, Maghrib, and Isha prayer times in ${locationName}.`,
+        description: `Fajr, Dhuhr, Asr, Maghrib, and Isha prayer times in ${locationName}.`,
         breadcrumb: {
           '@id': `${pageUrl}/#breadcrumb`,
         },
@@ -136,7 +143,7 @@ export default async function CityPrayerTimesPage({ params }: Props) {
         '@id': `${pageUrl}/#webapp`,
         name: `Prayer Times in ${locationName} - WaqtNama`,
         url: pageUrl,
-        description: `Accurate Fajr, Dhuhr, Asr, Maghrib, and Isha prayer times, live countdown, Qibla direction, and Hijri calendar dates for ${locationName}.`,
+        description: `Fajr, Dhuhr, Asr, Maghrib, and Isha prayer times, live countdown, Qibla direction, and Hijri calendar dates for ${locationName}.`,
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All',
         browserRequirements: 'Requires JavaScript. Requires HTML5.',

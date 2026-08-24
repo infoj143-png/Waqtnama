@@ -177,7 +177,7 @@ export default function RamadanTimingGuidePage() {
                   <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-gray-900 font-semibold mb-1">Check Local Elevation & Coordinates</strong>
-                    <span className="text-gray-600">Ensure your city page on WaqtNama reflects your exact location, as elevation slightly impacts sunset visibility.</span>
+                    <span className="text-gray-600">Ensure your city page on WaqtNama reflects your local city, as elevation slightly impacts sunset visibility.</span>
                   </div>
                 </div>
 

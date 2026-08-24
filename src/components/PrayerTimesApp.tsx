@@ -19,7 +19,7 @@ import { QiblaCompass } from '@/components/QiblaCompass';
 import { Compass, ShieldCheck, AlertCircle, Loader2, Heart, BookOpen, Clock, Globe, MapPin } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { locationNameToSlug } from '@/lib/citySlug';
-import { CityDetails } from '@/lib/cityDetails';
+import { getCityDetails, CityDetails } from '@/lib/cityDetails';
 
 interface PrayerTimesAppProps {
   initialCity?: string;
@@ -38,6 +38,9 @@ export function PrayerTimesApp({
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const [cityQuery, setCityQuery] = useState<string>(initialCity);
   const [now, setNow] = useState<Date>(() => new Date());
+  const [currentCityDetails, setCurrentCityDetails] = useState<CityDetails | null>(
+    cityDetails || getCityDetails(locationNameToSlug(initialCity))
+  );
 
   const [rawApiData, setRawApiData] = useState<AladhanApiResponseData | null>(initialApiData);
   const [prayerData, setPrayerData] = useState<CityPrayerData | null>(() => {
@@ -73,14 +76,16 @@ export function PrayerTimesApp({
     setLoading(true);
     setError(null);
     const { city, country } = parseLocationQuery(query);
+    const slug = locationNameToSlug(query);
+    const details = getCityDetails(slug);
+    setCurrentCityDetails(details);
 
     try {
-      const data = await getPrayerTimes(city, country);
+      const data = await getPrayerTimes(city, country, details.methodId);
       setRawApiData(data);
       setCityQuery(query);
 
       if (updateUrl && typeof window !== 'undefined') {
-        const slug = locationNameToSlug(query);
         window.history.pushState({}, '', `/prayer-times/${slug}`);
       }
     } catch (err: unknown) {
@@ -99,8 +104,14 @@ export function PrayerTimesApp({
       setLoading(true);
       setError(null);
 
+      const details = locationName ? getCityDetails(locationNameToSlug(locationName)) : null;
+      if (details) {
+        setCurrentCityDetails(details);
+      }
+      const methodId = details?.methodId || 3;
+
       try {
-        const data = await getPrayerTimesByCoords(latitude, longitude);
+        const data = await getPrayerTimesByCoords(latitude, longitude, methodId);
         setRawApiData(data);
         if (locationName) {
           setCityQuery(locationName);
@@ -177,24 +188,24 @@ export function PrayerTimesApp({
           />
 
           {/* City Unique Introductory Paragraph & Badges */}
-          {cityDetails && (
+          {currentCityDetails && (
             <div className="mb-6 bg-white border border-emerald-100 rounded-2xl p-5 shadow-sm space-y-3">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
                   <MapPin className="w-3.5 h-3.5 text-emerald-700" />
-                  {cityDetails.name}, {cityDetails.country}
+                  {currentCityDetails.name}, {currentCityDetails.country}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
                   <Clock className="w-3.5 h-3.5 text-slate-500" />
-                  {cityDetails.timezone}
+                  {currentCityDetails.timezone}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200/60 px-3 py-1 rounded-full">
                   <Globe className="w-3.5 h-3.5 text-amber-600" />
-                  {cityDetails.method}
+                  {currentCityDetails.method}
                 </span>
               </div>
               <p className="text-sm text-gray-700 leading-relaxed font-normal">
-                {cityDetails.introParagraph}
+                {currentCityDetails.introParagraph}
               </p>
             </div>
           )}

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     absolute: 'Prayer Times by City - Global Islamic Directory | WaqtNama',
   },
   description:
-    'Browse accurate daily Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha) for cities across Pakistan, Saudi Arabia, UAE, UK, USA, Canada, Australia, and worldwide.',
+    'Browse daily Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha) for cities across Pakistan, Saudi Arabia, UAE, UK, USA, Canada, Australia, and worldwide.',
   alternates: {
     canonical: `${siteUrl}/prayer-times`,
   },
@@ -39,9 +39,9 @@ const CITY_GROUPS = [
       { name: 'Multan', slug: 'multan' },
       { name: 'Peshawar', slug: 'peshawar' },
       { name: 'Quetta', slug: 'quetta' },
-      { name: 'Gujranwala', slug: 'gujranwala-pakistan' },
-      { name: 'Sialkot', slug: 'sialkot-pakistan' },
-      { name: 'Hyderabad', slug: 'hyderabad-pakistan' },
+      { name: 'Gujranwala', slug: 'gujranwala' },
+      { name: 'Sialkot', slug: 'sialkot' },
+      { name: 'Hyderabad', slug: 'hyderabad' },
     ],
   },
   {
@@ -51,32 +51,32 @@ const CITY_GROUPS = [
       { name: 'Medina', slug: 'medina' },
       { name: 'Riyadh', slug: 'riyadh' },
       { name: 'Dubai', slug: 'dubai' },
-      { name: 'Abu Dhabi', slug: 'abu-dhabi-uae' },
-      { name: 'Doha', slug: 'doha-qatar' },
-      { name: 'Kuwait City', slug: 'kuwait-city-kuwait' },
-      { name: 'Muscat', slug: 'muscat-oman' },
+      { name: 'Abu Dhabi', slug: 'abu-dhabi' },
+      { name: 'Doha', slug: 'doha' },
+      { name: 'Kuwait City', slug: 'kuwait-city' },
+      { name: 'Muscat', slug: 'muscat' },
     ],
   },
   {
     region: 'United Kingdom & Europe',
     cities: [
       { name: 'London', slug: 'london' },
-      { name: 'Birmingham', slug: 'birmingham-uk' },
-      { name: 'Manchester', slug: 'manchester-uk' },
+      { name: 'Birmingham', slug: 'birmingham' },
+      { name: 'Manchester', slug: 'manchester' },
       { name: 'Istanbul', slug: 'istanbul' },
-      { name: 'Ankara', slug: 'ankara-turkey' },
+      { name: 'Ankara', slug: 'ankara' },
     ],
   },
   {
     region: 'North America',
     cities: [
       { name: 'New York', slug: 'new-york' },
-      { name: 'Chicago', slug: 'chicago-usa' },
-      { name: 'Los Angeles', slug: 'los-angeles-usa' },
-      { name: 'Houston', slug: 'houston-usa' },
+      { name: 'Chicago', slug: 'chicago' },
+      { name: 'Los Angeles', slug: 'los-angeles' },
+      { name: 'Houston', slug: 'houston' },
       { name: 'Toronto', slug: 'toronto' },
-      { name: 'Montreal', slug: 'montreal-canada' },
-      { name: 'Vancouver', slug: 'vancouver-canada' },
+      { name: 'Montreal', slug: 'montreal' },
+      { name: 'Vancouver', slug: 'vancouver' },
     ],
   },
   {
@@ -84,16 +84,16 @@ const CITY_GROUPS = [
     cities: [
       { name: 'Jakarta', slug: 'jakarta' },
       { name: 'Kuala Lumpur', slug: 'kuala-lumpur' },
-      { name: 'Dhaka', slug: 'dhaka-bangladesh' },
+      { name: 'Dhaka', slug: 'dhaka' },
       { name: 'Sydney', slug: 'sydney' },
-      { name: 'Melbourne', slug: 'melbourne-australia' },
+      { name: 'Melbourne', slug: 'melbourne' },
     ],
   },
   {
     region: 'Africa & Middle East',
     cities: [
       { name: 'Cairo', slug: 'cairo' },
-      { name: 'Casablanca', slug: 'casablanca-morocco' },
+      { name: 'Casablanca', slug: 'casablanca' },
     ],
   },
 ];
@@ -103,7 +103,7 @@ export default function BrowseCitiesPage() {
     '@context': 'https://schema.org',
     '@type': 'DirectoryPage',
     name: 'Global City Prayer Times Directory',
-    description: 'Browse accurate daily Islamic prayer times for major cities worldwide.',
+    description: 'Browse daily Islamic prayer times for major cities worldwide.',
     url: `${siteUrl}/prayer-times`,
     publisher: {
       '@type': 'Organization',
@@ -135,7 +135,7 @@ export default function BrowseCitiesPage() {
                 Islamic Prayer Times by City
               </h1>
               <p className="text-emerald-100 text-sm sm:text-base leading-relaxed">
-                Select your city below to get exact daily Fajr, Dhuhr, Asr, Maghrib, and Isha timings, live countdowns, calculation method details, and Qibla compass bearings.
+                Select your city below to get daily Fajr, Dhuhr, Asr, Maghrib, and Isha timings, live countdowns, calculation method details, and Qibla compass bearings.
               </p>
             </div>
           </div>

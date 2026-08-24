@@ -7,16 +7,16 @@ import { Compass, Clock, Globe2, ShieldCheck, ArrowLeft, CheckCircle2 } from 'lu
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
 export const metadata: Metadata = {
-  title: 'About Us - Accurate Prayer Times & Qibla Direction',
+  title: 'About Us - Calculated Prayer Times & Qibla Direction',
   description:
-    'Learn about WaqtNama. We provide accurate Islamic prayer times, Qibla direction, and Hijri calendar dates for all cities worldwide using authentic calculation methods.',
+    'Learn about WaqtNama. We provide reliable Islamic prayer times, Qibla direction, and Hijri calendar dates for all cities worldwide using authentic calculation methods.',
   alternates: {
     canonical: `${siteUrl}/about-us`,
   },
   openGraph: {
-    title: 'About WaqtNama - Accurate Prayer Times & Qibla Direction',
+    title: 'About WaqtNama - Calculated Prayer Times & Qibla Direction',
     description:
-      'Discover WaqtNama: your trusted global Islamic companion for accurate prayer times, Qibla compass, and Hijri calendar dates.',
+      'Discover WaqtNama: your trusted global Islamic companion for calculated prayer times, Qibla compass, and Hijri calendar dates.',
     url: `${siteUrl}/about-us`,
     siteName: 'WaqtNama',
     type: 'website',
@@ -30,7 +30,7 @@ export default function AboutUsPage() {
     name: 'About WaqtNama',
     url: `${siteUrl}/about-us`,
     description:
-      'WaqtNama provides accurate prayer times and Qibla direction for all cities worldwide. Our goal is to help Muslims never miss their prayers.',
+      'WaqtNama provides calculated prayer times and Qibla direction for all cities worldwide. Our goal is to help Muslims stay connected with their daily prayers.',
     publisher: {
       '@type': 'Organization',
       name: 'WaqtNama',
@@ -83,14 +83,14 @@ export default function AboutUsPage() {
               Empowering Muslims Worldwide with Precision & Clarity
             </h1>
 
-            {/* Content Body - Target ~400 words */}
+            {/* Content Body */}
             <div className="space-y-6 text-gray-700 text-base sm:text-lg leading-relaxed">
               <p>
-                Welcome to <strong className="text-emerald-800">WaqtNama</strong>, your dedicated digital platform created to provide highly accurate Islamic prayer times and precise Qibla direction for every city across the globe. Our ultimate goal is to assist Muslims everywhere in fulfilling their sacred daily obligations without delay or uncertainty.
+                Welcome to <strong className="text-emerald-800">WaqtNama</strong>, your dedicated digital platform created to provide calculated Islamic prayer times and Qibla direction for cities across the globe based on recognized astronomical methods.
               </p>
 
               <p>
-                Prayer (Salah) is the cornerstone of Islamic practice, serving as a direct connection between the believer and Allah Almighty. Recognizing the importance of performing prayers on time, WaqtNama is designed to deliver instantaneous, trustworthy, and daily updated timings for Fajr, Dhuhr, Asr, Maghrib, and Isha. Whether you are living in a bustling metropolis like London, New York, or Karachi, or traveling to a remote destination, WaqtNama ensures that you stay connected to your daily prayer schedule with absolute ease and confidence.
+                Prayer (Salah) is the cornerstone of Islamic practice, serving as a direct connection between the believer and Allah Almighty. Recognizing the importance of performing prayers on time, WaqtNama is designed to deliver instantaneous, trustworthy, and daily updated timings for Fajr, Dhuhr, Asr, Maghrib, and Isha. Whether you are living in a bustling metropolis like London, New York, or Karachi, or traveling to a remote destination, WaqtNama ensures that you stay connected to your daily prayer schedule with ease and confidence.
               </p>
 
               <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -101,7 +101,7 @@ export default function AboutUsPage() {
                   <div>
                     <h3 className="font-bold text-gray-900 text-base mb-1">Authentic Calculations</h3>
                     <p className="text-xs text-gray-600 leading-normal">
-                      We integrate verified astronomical calculation standards (such as ISNA, Muslim World League, Umm al-Qura, and Karachi University) for exact prayer schedules.
+                      We integrate verified astronomical calculation standards (such as ISNA, Muslim World League, Umm al-Qura, and Karachi University) for calculated prayer schedules based on astronomical methods.
                     </p>
                   </div>
                 </div>
@@ -120,11 +120,11 @@ export default function AboutUsPage() {
               </div>
 
               <p>
-                To provide the highest level of precision, WaqtNama utilizes recognized calculation methods adapted to local astronomical conventions around the world. In addition to daily prayer times, WaqtNama features an interactive Qibla direction compass, accurate Hijri calendar dates, and live prayer countdown timers. Every feature is crafted with care to ensure ease of use on mobile devices, tablets, and desktops alike.
+                To provide dependable timings, WaqtNama utilizes recognized calculation methods adapted to local astronomical conventions around the world. In addition to daily prayer times, WaqtNama features an interactive Qibla direction compass, Hijri calendar dates, and live prayer countdown timers. Every feature is crafted with care to ensure ease of use on mobile devices, tablets, and desktops alike.
               </p>
 
               <p>
-                We believe that reliable spiritual utility tools should be free, accessible, fast, and completely user-friendly. WaqtNama is continuously maintained and optimized so that every Muslim can seamlessly incorporate accurate timing into their daily routines.
+                We believe that reliable spiritual utility tools should be free, accessible, fast, and completely user-friendly. WaqtNama is continuously maintained and optimized so that every Muslim can seamlessly incorporate timing schedules into their daily routines.
               </p>
 
               <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-200 mt-8">
@@ -135,7 +135,7 @@ export default function AboutUsPage() {
                 <ul className="space-y-2 text-emerald-950 text-sm sm:text-base">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    Providing accurate and verified prayer schedules globally.
+                    Providing calculated and verified prayer schedules globally.
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />

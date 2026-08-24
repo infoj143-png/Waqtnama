@@ -86,6 +86,84 @@ export const ALL_CITY_SLUGS = [
   'casablanca-morocco',
 ] as const;
 
+const CANONICAL_SLUG_MAP: Record<string, string> = {
+  'karachi-pakistan': 'karachi',
+  'lahore-pakistan': 'lahore',
+  'islamabad-pakistan': 'islamabad',
+  'faisalabad-pakistan': 'faisalabad',
+  'rawalpindi-pakistan': 'rawalpindi',
+  'multan-pakistan': 'multan',
+  'peshawar-pakistan': 'peshawar',
+  'quetta-pakistan': 'quetta',
+  'gujranwala-pakistan': 'gujranwala',
+  'sialkot-pakistan': 'sialkot',
+  'hyderabad-pakistan': 'hyderabad',
+  'london-uk': 'london',
+  'birmingham-uk': 'birmingham',
+  'manchester-uk': 'manchester',
+  'new-york-usa': 'new-york',
+  'chicago-usa': 'chicago',
+  'los-angeles-usa': 'los-angeles',
+  'houston-usa': 'houston',
+  'mecca-saudi-arabia': 'mecca',
+  'medina-saudi-arabia': 'medina',
+  'riyadh-saudi-arabia': 'riyadh',
+  'jeddah-saudi-arabia': 'jeddah',
+  'dammam-saudi-arabia': 'dammam',
+  'dubai-uae': 'dubai',
+  'abu-dhabi-uae': 'abu-dhabi',
+  'sharjah-uae': 'sharjah',
+  'doha-qatar': 'doha',
+  'kuwait-city-kuwait': 'kuwait-city',
+  'muscat-oman': 'muscat',
+  'manama-bahrain': 'manama',
+  'istanbul-turkey': 'istanbul',
+  'ankara-turkey': 'ankara',
+  'toronto-canada': 'toronto',
+  'montreal-canada': 'montreal',
+  'vancouver-canada': 'vancouver',
+  'sydney-australia': 'sydney',
+  'melbourne-australia': 'melbourne',
+  'kuala-lumpur-malaysia': 'kuala-lumpur',
+  'jakarta-indonesia': 'jakarta',
+  'dhaka-bangladesh': 'dhaka',
+  'cairo-egypt': 'cairo',
+  'casablanca-morocco': 'casablanca',
+};
+
+export function getCanonicalCitySlug(slug: string): string {
+  const decoded = decodeURIComponent(slug).toLowerCase().trim();
+  if (CANONICAL_SLUG_MAP[decoded]) {
+    return CANONICAL_SLUG_MAP[decoded];
+  }
+  const countrySuffixes = [
+    '-pakistan',
+    '-saudi-arabia',
+    '-uae',
+    '-turkey',
+    '-uk',
+    '-usa',
+    '-canada',
+    '-australia',
+    '-malaysia',
+    '-indonesia',
+    '-bangladesh',
+    '-egypt',
+    '-morocco',
+    '-qatar',
+    '-kuwait',
+    '-oman',
+    '-bahrain',
+  ];
+  for (const suffix of countrySuffixes) {
+    if (decoded.endsWith(suffix)) {
+      const base = decoded.slice(0, -suffix.length);
+      if (base) return base;
+    }
+  }
+  return decoded;
+}
+
 export function slugToLocationName(slug: string): string {
   const decoded = decodeURIComponent(slug).toLowerCase().trim();
 
@@ -180,7 +258,6 @@ export function slugToLocationName(slug: string): string {
     return knownMappings[decoded];
   }
 
-  // Fallback slug parser e.g., "san-francisco-usa" -> "San Francisco, Usa"
   const parts = decoded.split('-');
   if (parts.length > 1) {
     const countryPart = parts[parts.length - 1];
@@ -196,9 +273,10 @@ export function slugToLocationName(slug: string): string {
 }
 
 export function locationNameToSlug(location: string): string {
-  return location
+  const rawSlug = location
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-');
+  return getCanonicalCitySlug(rawSlug);
 }
