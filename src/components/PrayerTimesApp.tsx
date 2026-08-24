@@ -16,7 +16,7 @@ import { SearchBar } from '@/components/SearchBar';
 import { CountdownCard } from '@/components/CountdownCard';
 import { PrayerGrid } from '@/components/PrayerGrid';
 import { QiblaCompass } from '@/components/QiblaCompass';
-import { Compass, ShieldCheck, AlertCircle, Loader2, Heart, BookOpen, Clock, Globe, MapPin } from 'lucide-react';
+import { Compass, ShieldCheck, AlertCircle, Loader2, Heart, BookOpen, Clock, Globe, MapPin, Sparkles } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { locationNameToSlug } from '@/lib/citySlug';
 import { getCityDetails, CityDetails } from '@/lib/cityDetails';
@@ -179,6 +179,41 @@ export function PrayerTimesApp({
 
         {/* Main Content Container */}
         <main className="max-w-5xl mx-auto px-4 py-6 sm:py-8">
+          {/* Top Event Alert Banner for 12 Rabi ul Awwal 2026 */}
+          <div className="mb-6 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 rounded-2xl p-4 sm:p-5 text-white shadow-md border border-emerald-600/40 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3 z-10">
+              <div className="p-2.5 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 flex-shrink-0">
+                <Sparkles className="w-6 h-6 text-emerald-200" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="bg-emerald-500/30 text-emerald-100 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+                    {language === 'ur' ? 'خصوصی اپڈیٹ' : 'SPECIAL EVENT'}
+                  </span>
+                  <span className="text-emerald-200 text-xs font-medium">Pakistan Calendar 1448 AH</span>
+                </div>
+                <h2 className="text-base sm:text-lg font-bold tracking-tight">
+                  {language === 'ur'
+                    ? '12 ربیع الاول 2026 عید میلاد النبی - پاکستان میں تاریخ و اوقات'
+                    : '12 Rabi ul Awwal 2026 Date & Timings in Pakistan'}
+                </h2>
+                <p className="text-xs text-emerald-100/90 mt-0.5 max-w-2xl">
+                  {language === 'ur'
+                    ? 'پاکستان میں چاند کی رویت، 12 ربیع الاول کی تاریخ، شبِ میلاد کے نوافل کے اوقات اور درود شریف کے وظائف کا مکمل گائیڈ۔'
+                    : 'Check expected moon sighting, Eid Milad un Nabi holiday date, Shab-e-Milad nawafil schedule & Darood Shareef azkar.'}
+                </p>
+              </div>
+            </div>
+
+            <Link
+              href="/12-rabi-ul-awwal-2026-date-pakistan"
+              className="z-10 inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md flex-shrink-0 w-full md:w-auto"
+            >
+              <span>{language === 'ur' ? 'تفصیلات دیکھیں' : 'View Date & Timings'}</span>
+              <BookOpen className="w-4 h-4" />
+            </Link>
+          </div>
+
           {/* City Search Bar */}
           <SearchBar
             language={language}

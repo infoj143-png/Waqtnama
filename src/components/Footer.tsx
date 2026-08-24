@@ -28,6 +28,13 @@ export const Footer: React.FC = () => {
               Prayer Calculations
             </Link>
             <Link
+              href="/12-rabi-ul-awwal-2026-date-pakistan"
+              className="flex items-center gap-1.5 hover:text-emerald-700 transition-colors py-1 bg-emerald-50 text-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-100/60"
+            >
+              <Moon className="w-3.5 h-3.5 text-emerald-600" />
+              12 Rabi ul Awwal 2026
+            </Link>
+            <Link
               href="/ramadan-timing-guide"
               className="flex items-center gap-1.5 hover:text-emerald-700 transition-colors py-1 bg-emerald-50 text-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-100/60"
             >
