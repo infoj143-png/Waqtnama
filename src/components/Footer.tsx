@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Compass, Heart, Mail, Shield, Info, Calculator, Moon, Navigation } from 'lucide-react';
+import { Compass, Heart, Mail, Shield, Info, Calculator, Moon, Navigation, FileText } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -65,6 +65,13 @@ export const Footer: React.FC = () => {
             >
               <Shield className="w-4 h-4 text-emerald-600" />
               Privacy Policy
+            </Link>
+            <Link
+              href="/terms-and-conditions"
+              className="flex items-center gap-1.5 hover:text-emerald-700 transition-colors py-1"
+            >
+              <FileText className="w-4 h-4 text-emerald-600" />
+              Terms & Conditions
             </Link>
             <Link
               href="/contact-us"

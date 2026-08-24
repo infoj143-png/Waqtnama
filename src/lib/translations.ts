@@ -82,7 +82,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     qibla: {
       title: 'Qibla Direction Compass',
-      subtitle: 'Find exact direction to Kaaba, Makkah from anywhere',
+      subtitle: 'Find direction to Kaaba, Makkah from anywhere',
       findBtn: 'Find Qibla',
       locating: 'Locating & Calibrating...',
       qiblaBearing: 'Qibla Angle',
@@ -95,7 +95,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       km: 'km',
       degrees: 'deg',
     },
-    footerText: 'WaqtNama - Accurate prayer times for Muslims around the world.',
+    footerText: 'WaqtNama - Islamic prayer times for Muslims around the world.',
     dir: 'ltr',
   },
   ur: {
@@ -130,7 +130,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     qibla: {
       title: 'قبلہ رخ کمپاس',
-      subtitle: 'دنیا میں کہیں سے بھی مکہ مکرمہ میں خانہ کعبہ کی درست سمت معلوم کریں',
+      subtitle: 'دنیا میں کہیں سے بھی مکہ مکرمہ میں خانہ کعبہ کی سمت معلوم کریں',
       findBtn: 'قبلہ معلوم کریں',
       locating: 'لوکیشن اور سینسر جاری ہے...',
       qiblaBearing: 'قبلہ کا زاویہ',
@@ -143,7 +143,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       km: 'کلومیٹر',
       degrees: 'درجے',
     },
-    footerText: 'وقت نامہ - دنیا بھر کے مسلمانوں کے لیے بالکل درست اوقاتِ نماز۔',
+    footerText: 'وقت نامہ - دنیا بھر کے مسلمانوں کے لیے اوقاتِ نماز۔',
     dir: 'rtl',
   },
 };

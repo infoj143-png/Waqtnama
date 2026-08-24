@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { ALL_CITY_SLUGS } from '@/lib/citySlug';
+import { ALL_CITY_SLUGS, getCanonicalCitySlug } from '@/lib/citySlug';
 
 interface Props {
   params: {
@@ -14,5 +14,6 @@ export async function generateStaticParams() {
 }
 
 export default function LegacyCityRedirect({ params }: Props) {
-  redirect(`/prayer-times/${params.city}`);
+  const canonicalSlug = getCanonicalCitySlug(params.city);
+  redirect(`/prayer-times/${canonicalSlug}`);
 }

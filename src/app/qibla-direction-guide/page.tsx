@@ -88,7 +88,7 @@ export default function QiblaDirectionGuidePage() {
               </h1>
 
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                The Qibla (القبلة‎) is the direction facing the Kaaba in the Sacred Mosque (Al-Masjid al-Haram) in Mecca, Saudi Arabia. Facing the Qibla is a required condition (shart) for Muslims during daily obligatory prayers (Salah). Whether you are using a digital phone compass, a traditional magnetic compass, or solar indicators, this guide explains how the Qibla direction is calculated and how to ensure exact orientation.
+                The Qibla (القبلة‎) is the direction facing the Kaaba in the Sacred Mosque (Al-Masjid al-Haram) in Mecca, Saudi Arabia. Facing the Qibla is a required condition (shart) for Muslims during daily obligatory prayers (Salah). Whether you are using a digital phone compass, a traditional magnetic compass, or solar indicators, this guide explains how the Qibla direction is calculated and how to align your orientation.
               </p>
             </div>
 
@@ -145,7 +145,7 @@ export default function QiblaDirectionGuidePage() {
                 <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
                   <strong className="block text-emerald-900 font-bold mb-1">Enable High-Accuracy Location</strong>
                   <p className="text-gray-700">
-                    Allow GPS location access on your browser so the formula uses your exact latitude and longitude coordinates.
+                    Allow GPS location access on your browser so the formula uses your local latitude and longitude coordinates.
                   </p>
                 </div>
 
@@ -165,7 +165,7 @@ export default function QiblaDirectionGuidePage() {
                 3. The Solar Shadow Method (Sun directly over Kaaba)
               </h2>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Twice a year, the Sun passes directly overhead (at zenith) above the Holy Kaaba in Mecca. On these exact dates and times, any vertical object anywhere in the sunlit hemisphere casts a shadow aligned directly opposite or towards the Kaaba:
+                Twice a year, the Sun passes directly overhead (at zenith) above the Holy Kaaba in Mecca. On these specific dates and times, any vertical object anywhere in the sunlit hemisphere casts a shadow aligned directly opposite or towards the Kaaba:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-gray-700">
                 <li>
@@ -176,7 +176,7 @@ export default function QiblaDirectionGuidePage() {
                 </li>
               </ul>
               <p className="text-xs text-gray-600">
-                At these exact moments, looking directly toward the Sun (with appropriate eye protection) gives you the 100% exact direction of Mecca from anywhere on the sunlit side of the world.
+                At these specific moments, looking directly toward the Sun (with appropriate eye protection) indicates the calculated direction of Mecca from anywhere on the sunlit side of the world.
               </p>
             </section>
 
@@ -187,7 +187,7 @@ export default function QiblaDirectionGuidePage() {
                 Instant Qibla Direction on WaqtNama
               </h3>
               <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                When visiting any city page on WaqtNama, our integrated Qibla tool calculates the exact compass bearing in degrees (e.g. 265° WSW for Karachi, 58° NE for New York) and displays an interactive directional compass dial designed for ease of use.
+                When visiting any city page on WaqtNama, our integrated Qibla tool calculates the compass bearing in degrees (e.g. 265° WSW for Karachi, 58° NE for New York) and displays an interactive directional compass dial designed for ease of use.
               </p>
             </section>
           </article>
