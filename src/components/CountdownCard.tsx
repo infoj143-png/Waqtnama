@@ -26,6 +26,8 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
   const pad = (num: number) => (num < 10 ? `0${num}` : `${num}`);
 
   const nextPrayerName = t.prayers[data.nextPrayerKey];
+  const daysRemaining = (data.timeRemaining as { days?: number }).days;
+  const daysLabel = language === 'ur' ? 'دن' : 'Days';
 
   return (
     <div className="w-full bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 rounded-3xl text-white p-6 sm:p-8 shadow-xl relative overflow-hidden mb-8 border border-emerald-500/30">
@@ -87,6 +89,17 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
 
           {/* Countdown Digit Boxes */}
           <div className="flex items-center gap-2 sm:gap-3 my-1">
+            {daysRemaining !== undefined && daysRemaining > 0 && (
+              <>
+                <div className="flex flex-col items-center">
+                  <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner" suppressHydrationWarning>
+                    {mounted ? pad(daysRemaining) : '--'}
+                  </div>
+                  <span className="text-[10px] text-emerald-200 font-medium uppercase mt-1">{daysLabel}</span>
+                </div>
+                <span className="text-2xl font-bold text-emerald-300 -mt-4">:</span>
+              </>
+            )}
             <div className="flex flex-col items-center">
               <div className="bg-white/15 border border-white/20 text-white font-mono font-bold text-2xl sm:text-3xl px-3 py-1.5 rounded-xl min-w-[52px] text-center shadow-inner" suppressHydrationWarning>
                 {mounted ? pad(data.timeRemaining.hours) : '--'}
