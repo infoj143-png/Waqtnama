@@ -84,16 +84,22 @@ export default function EventClientComponent() {
     return () => clearInterval(timer);
   }, []);
 
-  // 12 Rabi ul Awwal Target Date & Maghrib Shift Calculation Logic:
-  // 1. Target date is set directly to TODAY's live date ending at Maghrib (~6:30 PM).
-  // 2. If current live time is BEFORE today's Maghrib: Count down remaining time for today's event.
-  // 3. If current live time PASSES today's Maghrib: Automatically shift target date to next year's date.
-  const targetDate = new Date(now);
-  targetDate.setHours(18, 30, 0, 0); // Today's Maghrib time (6:30 PM)
+  // TODAY'S MAGHRIB & NEXT-YEAR AUTOMATIC COUNTDOWN LOGIC:
+  // 1. Set the active target event to TODAY (26 August 2026) ending at Maghrib time (~6:30 PM / 18:30).
+  // 2. IF current live time is BEFORE today's Maghrib: Show remaining countdown for today's 12 Rabi ul Awwal event ending at Maghrib.
+  // 3. IF current live time PASSES today's Maghrib: Automatically switch target date to next year's 12 Rabi ul Awwal (2027) and start dynamic countdown for next year.
+  const maghribToday = new Date(now);
+  maghribToday.setHours(18, 30, 0, 0); // Today's Maghrib time (~6:30 PM)
 
-  if (now.getTime() >= targetDate.getTime()) {
+  const isAfterMaghribToday = now.getTime() >= maghribToday.getTime();
+
+  const targetDate = new Date(maghribToday);
+  if (isAfterMaghribToday) {
     targetDate.setFullYear(targetDate.getFullYear() + 1);
   }
+
+  const targetYear = targetDate.getFullYear();
+  const hijriYear = targetYear === 2026 ? '1448' : '1449';
 
   const totalSecsRemaining = Math.max(0, Math.floor((targetDate.getTime() - now.getTime()) / 1000));
   const days = Math.floor(totalSecsRemaining / (3600 * 24));
@@ -104,16 +110,16 @@ export default function EventClientComponent() {
   const eventPrayerData: CityPrayerData = {
     city: 'Pakistan',
     country: 'Pakistan',
-    formattedLocation: '12 Rabi ul Awwal 2026 (Eid Milad un Nabi) - Pakistan',
+    formattedLocation: `12 Rabi ul Awwal ${targetYear} (Eid Milad un Nabi) - Pakistan`,
     prayers: [
       { key: 'fajr', time24: '04:22', time12: '04:22 AM', dateObj: targetDate },
       { key: 'dhuhr', time24: '12:12', time12: '12:12 PM', dateObj: targetDate },
       { key: 'asr', time24: '15:45', time12: '03:45 PM', dateObj: targetDate },
-      { key: 'maghrib', time24: '18:35', time12: '06:35 PM', dateObj: targetDate },
+      { key: 'maghrib', time24: '18:30', time12: '06:30 PM', dateObj: targetDate },
       { key: 'isha', time24: '20:05', time12: '08:05 PM', dateObj: targetDate },
     ],
-    nextPrayerKey: 'fajr',
-    currentPrayerKey: 'isha',
+    nextPrayerKey: 'maghrib',
+    currentPrayerKey: 'asr',
     timeRemaining: {
       days,
       hours,
@@ -124,13 +130,17 @@ export default function EventClientComponent() {
   };
 
   const dates: FormattedDates = {
-    gregorian: 'Sunday, 6 September 2026 (Expected)',
-    hijri: '12 Rabi ul Awwal 1448 AH',
+    gregorian: targetYear === 2026 ? 'Wednesday, 26 August 2026' : `Thursday, 26 August ${targetYear}`,
+    hijri: `12 Rabi ul Awwal ${hijriYear} AH`,
   };
 
   const currentTimeStr = mounted
     ? now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })
     : '--:--:--';
+
+  const todayDateStr = mounted
+    ? now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '26 August 2026';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -196,7 +206,7 @@ export default function EventClientComponent() {
               </span>
               <span className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-900 font-bold px-3 py-1 rounded-full text-xs sm:text-sm">
                 <Calendar className="w-4 h-4 text-amber-600" />
-                Expected Public Holiday Pakistan
+                Public Holiday Pakistan
               </span>
             </div>
 
@@ -210,7 +220,7 @@ export default function EventClientComponent() {
             </div>
 
             <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-              The <strong>12 Rabi ul Awwal 2026 date in Pakistan</strong> (Eid Milad un Nabi 1448 AH) is expected to be observed on <strong>Sunday, September 6, 2026</strong>, subject to the official <strong>Rabi ul Awwal 1448 moon sighting Pakistan</strong> by the Central Ruet-e-Hilal Committee. The 1st of Rabi ul Awwal 1448 AH is anticipated to fall on Tuesday, August 26, 2026. Eid Milad un Nabi is a national gazetted holiday across all provinces including Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, and Islamabad.
+              The <strong>12 Rabi ul Awwal 2026 date in Pakistan</strong> (Eid Milad un Nabi 1448 AH) is observed on <strong>Wednesday, 26 August 2026</strong>, subject to the official <strong>Rabi ul Awwal 1448 moon sighting Pakistan</strong> by the Central Ruet-e-Hilal Committee. Eid Milad un Nabi is a national gazetted holiday across all provinces including Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, and Islamabad.
             </p>
           </div>
 
@@ -227,6 +237,7 @@ export default function EventClientComponent() {
               data={eventPrayerData}
               dates={dates}
               currentTimeStr={currentTimeStr}
+              todayDateStr={todayDateStr}
               mounted={mounted}
             />
           </section>
@@ -273,7 +284,7 @@ export default function EventClientComponent() {
             <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 text-xs sm:text-sm text-emerald-900">
               <p className="font-semibold mb-1">💡 Note on Shab-e-Milad Nawafil Timing:</p>
               <p className="text-gray-700">
-                The Mubarak night of 12 Rabi ul Awwal begins immediately after Maghrib on the evening of 11th Rabi ul Awwal (Saturday night, Sept 5, 2026). Worship (Ibadat), recite Darood Shareef, and perform Nawafil throughout this night until Fajr.
+                The Mubarak night of 12 Rabi ul Awwal begins immediately after Maghrib on the evening of 11th Rabi ul Awwal (Tuesday night, Aug 25, 2026). Worship (Ibadat), recite Darood Shareef, and perform Nawafil throughout this night until Fajr.
               </p>
             </div>
           </section>
@@ -357,7 +368,7 @@ export default function EventClientComponent() {
                   When is 12 Rabi ul Awwal 2026 in Pakistan?
                 </h3>
                 <p className="text-gray-700">
-                  In Pakistan, 12 Rabi ul Awwal 2026 (Eid Milad un Nabi) is expected to be celebrated on <strong>Sunday, September 6, 2026</strong>. The exact date depends on the 1st Rabi ul Awwal 1448 moon sighting expected on August 26, 2026.
+                  In Pakistan, 12 Rabi ul Awwal 2026 (Eid Milad un Nabi) is celebrated on <strong>Wednesday, 26 August 2026</strong>.
                 </p>
               </div>
 
@@ -375,7 +386,7 @@ export default function EventClientComponent() {
                   What time does Shab-e-Milad worship start?
                 </h3>
                 <p className="text-gray-700">
-                  Shab-e-Milad starts after Maghrib prayer on the evening of 11th Rabi ul Awwal (Saturday evening, Sept 5, 2026) and continues until Fajr on 12th Rabi ul Awwal.
+                  Shab-e-Milad starts after Maghrib prayer on the evening of 11th Rabi ul Awwal (Tuesday evening, Aug 25, 2026) and continues until Fajr on 12th Rabi ul Awwal.
                 </p>
               </div>
             </div>
