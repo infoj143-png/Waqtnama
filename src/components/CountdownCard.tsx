@@ -11,6 +11,7 @@ interface CountdownCardProps {
   data: CityPrayerData;
   dates: FormattedDates;
   currentTimeStr: string;
+  todayDateStr?: string;
   mounted?: boolean;
 }
 
@@ -19,6 +20,7 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
   data,
   dates,
   currentTimeStr,
+  todayDateStr,
   mounted = true,
 }) => {
   const t = translations[language];
@@ -28,6 +30,7 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
   const nextPrayerName = t.prayers[data.nextPrayerKey];
   const daysRemaining = (data.timeRemaining as { days?: number }).days;
   const daysLabel = language === 'ur' ? 'دن' : 'Days';
+  const displayTodayDate = todayDateStr || dates.gregorian;
 
   return (
     <div className="w-full bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 rounded-3xl text-white p-6 sm:p-8 shadow-xl relative overflow-hidden mb-8 border border-emerald-500/30">
@@ -75,8 +78,8 @@ export const CountdownCard: React.FC<CountdownCardProps> = ({
           <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-mono my-1" suppressHydrationWarning>
             {currentTimeStr || '--:--:--'}
           </div>
-          <span className="text-xs text-emerald-100/70">
-            {t.todayDate}: {dates.gregorian}
+          <span className="text-xs text-emerald-100/70" suppressHydrationWarning>
+            {t.todayDate}: {displayTodayDate}
           </span>
         </div>
 

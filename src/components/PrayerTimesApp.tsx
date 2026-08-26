@@ -200,7 +200,7 @@ export function PrayerTimesApp({
                 <p className="text-xs text-emerald-100/90 mt-0.5 max-w-2xl">
                   {language === 'ur'
                     ? 'پاکستان میں چاند کی رویت، 12 ربیع الاول کی تاریخ، شبِ میلاد کے نوافل کے اوقات اور درود شریف کے وظائف کا مکمل گائیڈ۔'
-                    : 'Check expected moon sighting, Eid Milad un Nabi holiday date, Shab-e-Milad nawafil schedule & Darood Shareef azkar.'}
+                    : 'Check moon sighting, Eid Milad un Nabi holiday date, Shab-e-Milad nawafil schedule & Darood Shareef azkar.'}
                 </p>
               </div>
             </div>
