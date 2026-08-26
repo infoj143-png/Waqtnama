@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import './globals.css';
+import { AssistantWidget } from '@/components/AssistantWidget';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
@@ -107,6 +108,7 @@ export default function RootLayout({
       </head>
       <body className="bg-slate-50 text-gray-900 min-h-screen font-sans antialiased selection:bg-emerald-200 selection:text-emerald-900">
         {children}
+        <AssistantWidget />
         {isValidGaId && (
           <>
             <Script
