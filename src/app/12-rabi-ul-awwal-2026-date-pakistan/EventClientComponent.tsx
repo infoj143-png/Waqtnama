@@ -21,9 +21,6 @@ import {
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://waqtnama.vercel.app';
 
-// Target Event Date: 12 Rabi ul Awwal 1448 AH (approx. Sept 6, 2026 00:00:00 PKT)
-const EVENT_TARGET_DATE = new Date('2026-09-06T00:00:00+05:00');
-
 interface CitySchedule {
   city: string;
   province: string;
@@ -87,8 +84,18 @@ export default function EventClientComponent() {
     return () => clearInterval(timer);
   }, []);
 
-  // Calculate remaining time until Sept 6, 2026
-  const totalSecsRemaining = Math.max(0, Math.floor((EVENT_TARGET_DATE.getTime() - now.getTime()) / 1000));
+  // 12 Rabi ul Awwal Target Date & Maghrib Shift Calculation Logic:
+  // 1. Target date is set directly to TODAY's live date ending at Maghrib (~6:30 PM).
+  // 2. If current live time is BEFORE today's Maghrib: Count down remaining time for today's event.
+  // 3. If current live time PASSES today's Maghrib: Automatically shift target date to next year's date.
+  const targetDate = new Date(now);
+  targetDate.setHours(18, 30, 0, 0); // Today's Maghrib time (6:30 PM)
+
+  if (now.getTime() >= targetDate.getTime()) {
+    targetDate.setFullYear(targetDate.getFullYear() + 1);
+  }
+
+  const totalSecsRemaining = Math.max(0, Math.floor((targetDate.getTime() - now.getTime()) / 1000));
   const days = Math.floor(totalSecsRemaining / (3600 * 24));
   const hours = Math.floor((totalSecsRemaining % (3600 * 24)) / 3600);
   const minutes = Math.floor((totalSecsRemaining % 3600) / 60);
@@ -99,11 +106,11 @@ export default function EventClientComponent() {
     country: 'Pakistan',
     formattedLocation: '12 Rabi ul Awwal 2026 (Eid Milad un Nabi) - Pakistan',
     prayers: [
-      { key: 'fajr', time24: '04:22', time12: '04:22 AM', dateObj: EVENT_TARGET_DATE },
-      { key: 'dhuhr', time24: '12:12', time12: '12:12 PM', dateObj: EVENT_TARGET_DATE },
-      { key: 'asr', time24: '15:45', time12: '03:45 PM', dateObj: EVENT_TARGET_DATE },
-      { key: 'maghrib', time24: '18:35', time12: '06:35 PM', dateObj: EVENT_TARGET_DATE },
-      { key: 'isha', time24: '20:05', time12: '08:05 PM', dateObj: EVENT_TARGET_DATE },
+      { key: 'fajr', time24: '04:22', time12: '04:22 AM', dateObj: targetDate },
+      { key: 'dhuhr', time24: '12:12', time12: '12:12 PM', dateObj: targetDate },
+      { key: 'asr', time24: '15:45', time12: '03:45 PM', dateObj: targetDate },
+      { key: 'maghrib', time24: '18:35', time12: '06:35 PM', dateObj: targetDate },
+      { key: 'isha', time24: '20:05', time12: '08:05 PM', dateObj: targetDate },
     ],
     nextPrayerKey: 'fajr',
     currentPrayerKey: 'isha',
