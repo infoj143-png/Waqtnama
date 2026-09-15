@@ -142,14 +142,14 @@ export default function EventClientComponent() {
     ? now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     : '26 August 2026';
 
-  const jsonLd = {
+  const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: '12 Rabi ul Awwal 2026 Date in Pakistan (Eid Milad un Nabi)',
+    name: '12 Rabi ul Awal 2026 Date in Pakistan (Eid Milad un Nabi)',
     description:
-      'Official date, moon sighting details, public holiday announcement, Shab-e-Milad nawafil timing, and Darood Shareef azkar guide for 12 Rabi ul Awwal 2026 in Pakistan.',
-    startDate: '2026-09-06T00:00:00+05:00',
-    endDate: '2026-09-06T23:59:59+05:00',
+      'Find the exact date of 12 Rabi ul Awal 2026 in Pakistan, public holiday announcements, and complete guide for night ibadat and nawafil prayers.',
+    startDate: '2026-08-26T00:00:00+05:00',
+    endDate: '2026-08-26T23:59:59+05:00',
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
@@ -167,9 +167,41 @@ export default function EventClientComponent() {
     },
   };
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'When is 12 Rabi ul Awal 2026 in Pakistan?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'In Pakistan, 12 Rabi ul Awal 2026 (Eid Milad un Nabi 1448 AH) is expected to be observed on Wednesday, 26 August 2026, subject to the official moon sighting by the Central Ruet-e-Hilal Committee.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is 12 Rabi ul Awal a public holiday in Pakistan?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, 12 Rabi ul Awal (Eid Milad un Nabi) is an official public holiday in Pakistan across all provinces and federal territories. All government offices, educational institutions, and public sector organizations remain closed.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What are the special ibadat and nawafil for 12 Rabi ul Awal?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Special night ibadat for 12 Rabi ul Awal includes offering 4 Rakaat Salat-ul-Tasbeeh, performing 6 to 12 Rakaat Nawafil prayers after Isha, extensive recitation of Darood Shareef (such as Darood Ibrahimi), reciting Seerah-un-Nabi, and distributing charity (Sadqah).',
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-between bg-slate-50">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       <div>
         {/* Navigation Header */}
@@ -211,7 +243,7 @@ export default function EventClientComponent() {
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-              12 Rabi ul Awwal 2026 Date in Pakistan | Eid Milad un Nabi Holiday & Nawafil Timings
+              12 Rabi ul Awal 2026 Date in Pakistan, Holiday & Night Ibadat Guide
             </h1>
 
             {/* Urdu Subtitle Heading */}
@@ -223,6 +255,39 @@ export default function EventClientComponent() {
               The <strong>12 Rabi ul Awwal 2026 date in Pakistan</strong> (Eid Milad un Nabi 1448 AH) is observed on <strong>Wednesday, 26 August 2026</strong>, subject to the official <strong>Rabi ul Awwal 1448 moon sighting Pakistan</strong> by the Central Ruet-e-Hilal Committee. Eid Milad un Nabi is a national gazetted holiday across all provinces including Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, and Islamabad.
             </p>
           </div>
+
+          {/* Quick Summary Box */}
+          <section className="bg-gradient-to-br from-emerald-800 to-emerald-900 text-white rounded-3xl p-6 sm:p-8 shadow-md mb-8 border border-emerald-700">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 flex items-center gap-2 text-emerald-100">
+              <CheckCircle className="w-6 h-6 text-emerald-300" />
+              Quick Summary: 12 Rabi ul Awal 2026 Date & Holiday Status
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                <span className="text-xs text-emerald-200 block font-medium uppercase tracking-wider mb-1">Expected Date</span>
+                <span className="text-base sm:text-lg font-bold text-white block">26 August 2026</span>
+                <span className="text-xs text-emerald-200/80">Wednesday</span>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                <span className="text-xs text-emerald-200 block font-medium uppercase tracking-wider mb-1">Islamic Date</span>
+                <span className="text-base sm:text-lg font-bold text-white block">12 Rabi ul Awwal</span>
+                <span className="text-xs text-emerald-200/80">1448 AH</span>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                <span className="text-xs text-emerald-200 block font-medium uppercase tracking-wider mb-1">Holiday Status</span>
+                <span className="text-base sm:text-lg font-bold text-amber-300 block">Public Holiday</span>
+                <span className="text-xs text-emerald-200/80">All Pakistan (Gazetted)</span>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/10">
+                <span className="text-xs text-emerald-200 block font-medium uppercase tracking-wider mb-1">Shab-e-Milad Night</span>
+                <span className="text-base sm:text-lg font-bold text-white block">25 Aug Evening</span>
+                <span className="text-xs text-emerald-200/80">Starts at Maghrib</span>
+              </div>
+            </div>
+          </section>
 
           {/* Live Countdown Timer Card */}
           <section className="mb-8">
@@ -365,28 +430,28 @@ export default function EventClientComponent() {
             <div className="space-y-4 text-xs sm:text-sm">
               <div className="p-4 bg-slate-50 rounded-2xl border border-emerald-100">
                 <h3 className="font-bold text-gray-900 text-base mb-1">
-                  When is 12 Rabi ul Awwal 2026 in Pakistan?
+                  When is 12 Rabi ul Awal 2026 in Pakistan?
                 </h3>
                 <p className="text-gray-700">
-                  In Pakistan, 12 Rabi ul Awwal 2026 (Eid Milad un Nabi) is celebrated on <strong>Wednesday, 26 August 2026</strong>.
+                  In Pakistan, 12 Rabi ul Awal 2026 (Eid Milad un Nabi 1448 AH) is expected to be observed on <strong>Wednesday, 26 August 2026</strong>, subject to the official moon sighting by the Central Ruet-e-Hilal Committee.
                 </p>
               </div>
 
               <div className="p-4 bg-slate-50 rounded-2xl border border-emerald-100">
                 <h3 className="font-bold text-gray-900 text-base mb-1">
-                  Is Eid Milad un Nabi a public holiday in Pakistan?
+                  Is 12 Rabi ul Awal a public holiday in Pakistan?
                 </h3>
                 <p className="text-gray-700">
-                  Yes, 12 Rabi ul Awwal is an official public holiday declared by the Government of Pakistan. All schools, colleges, banks, and government offices remain closed.
+                  Yes, 12 Rabi ul Awal (Eid Milad un Nabi) is an official public holiday in Pakistan across all provinces and federal territories. All government offices, educational institutions, and public sector organizations remain closed.
                 </p>
               </div>
 
               <div className="p-4 bg-slate-50 rounded-2xl border border-emerald-100">
                 <h3 className="font-bold text-gray-900 text-base mb-1">
-                  What time does Shab-e-Milad worship start?
+                  What are the special ibadat and nawafil for 12 Rabi ul Awal?
                 </h3>
                 <p className="text-gray-700">
-                  Shab-e-Milad starts after Maghrib prayer on the evening of 11th Rabi ul Awwal (Tuesday evening, Aug 25, 2026) and continues until Fajr on 12th Rabi ul Awwal.
+                  Special night ibadat for 12 Rabi ul Awal includes offering 4 Rakaat Salat-ul-Tasbeeh, performing 6 to 12 Rakaat Nawafil prayers after Isha, extensive recitation of Darood Shareef (such as Darood Ibrahimi), reciting Seerah-un-Nabi, and distributing charity (Sadqah).
                 </p>
               </div>
             </div>
